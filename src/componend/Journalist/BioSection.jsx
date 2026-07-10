@@ -19,8 +19,8 @@ const BioSection = () => {
   //   );
   // }
     const bio = {
-    "name": "Dr.SM Shofikul Alom",
-    "description": "Dr shofikul alom is a fearless voice in the field of investigative journalism, known for uncovering hidden truths and amplifying unheard voices. With more than a decade of experience reporting on human rights and political accountability, she has partnered with leading global outlets to bring attention to stories that others ignore.\n\nHer storytelling is marked by a deep commitment to empathy, justice, and impact — going beyond facts to spotlight lives. Rumana’s work has not only earned international recognition but has also led to tangible policy conversations and reform.",
+    "name": "Dr. SM Shafiqul Alam",
+    "description": "Dr. SM Shafiqul Alam is a fearless voice in the field of investigative journalism, known for uncovering hidden truths and amplifying unheard voices. With more than a decade of experience reporting on human rights and political accountability, she has partnered with leading global outlets to bring attention to stories that others ignore.\n\nHer storytelling is marked by a deep commitment to empathy, justice, and impact — going beyond facts to spotlight lives. Rumana’s work has not only earned international recognition but has also led to tangible policy conversations and reform.",
     "quote": "Journalism isn’t about speaking — it’s about listening deeply, then echoing what matters."
   }
   return (
@@ -44,5 +44,3 @@ const BioSection = () => {
 };
 
 export default BioSection;
-
-

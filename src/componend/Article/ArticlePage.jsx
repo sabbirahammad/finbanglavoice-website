@@ -3,6 +3,35 @@ import axios from 'axios';
 import JournalistFooter from '../../pages/JournalistFooter';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import fallbackImage from '../../assets/t.webp';
+
+const renderFormattedText = (text) => {
+  if (!text) return null;
+  const lines = text.split('\n');
+  return lines.map((line, lineIdx) => {
+    const regex = /(\*\*.*?\*\*|==.*?==)/g;
+    const parts = line.split(regex);
+    const renderedLine = parts.map((part, partIdx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={partIdx} className="font-bold text-gray-900">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('==') && part.endsWith('==')) {
+        return (
+          <mark key={partIdx} className="bg-yellow-200 text-gray-900 px-1 rounded">
+            {part.slice(2, -2)}
+          </mark>
+        );
+      }
+      return part;
+    });
+    return (
+      <span key={lineIdx}>
+        {renderedLine}
+        {lineIdx < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+};
 
 const ArticlePage = () => {
   const [articles, setArticles] = useState([]);
@@ -164,20 +193,26 @@ const ArticlePage = () => {
         <h1 className="text-3xl font-bold text-center mb-8">📰 Articles</h1>
         {articles.map(article => (
           <div key={article.id} className="bg-white shadow p-6 mb-10 rounded-lg">
-            {article.image && (
+            <div className="mb-4 aspect-[16/9] overflow-hidden rounded bg-gray-100">
               <img
-                src={article.image}
+                src={article.image || fallbackImage}
                 alt={article.title}
-                className="w-full h-64 object-cover rounded mb-4"
+                className="h-full w-full object-cover object-center"
+                loading="lazy"
+                onError={(event) => {
+                  if (event.currentTarget.src !== fallbackImage) {
+                    event.currentTarget.src = fallbackImage;
+                  }
+                }}
               />
-            )}
+            </div>
             <div className="text-gray-500 text-sm mb-2">👤 {article.author}</div>
             <Link to={`/blog/${article.id}`}>
               <h2 className="text-xl font-semibold mb-2 text-indigo-800 hover:underline cursor-pointer">
                 {article.title}
               </h2>
             </Link>
-            <p className="text-gray-700 mb-4">{article.excerpt}</p>
+            <div className="text-gray-700 mb-4 leading-relaxed">{renderFormattedText(article.excerpt)}</div>
 
             {/* Comments Section */}
             <div className="mt-4 border-t pt-4">
@@ -294,7 +329,6 @@ const ArticlePage = () => {
 };
 
 export default ArticlePage;
-
 
 
 

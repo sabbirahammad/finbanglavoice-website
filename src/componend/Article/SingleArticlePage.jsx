@@ -1,6 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import fallbackImage from '../../assets/t.webp';
+
+const renderFormattedText = (text) => {
+  if (!text) return null;
+  const lines = text.split('\n');
+  return lines.map((line, lineIdx) => {
+    const regex = /(\*\*.*?\*\*|==.*?==)/g;
+    const parts = line.split(regex);
+    const renderedLine = parts.map((part, partIdx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={partIdx} className="font-bold text-gray-900">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('==') && part.endsWith('==')) {
+        return (
+          <mark key={partIdx} className="bg-yellow-200 text-gray-900 px-1 rounded">
+            {part.slice(2, -2)}
+          </mark>
+        );
+      }
+      return part;
+    });
+    return (
+      <span key={lineIdx}>
+        {renderedLine}
+        {lineIdx < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+};
 
 const SingleArticlePage = () => {
   const { id } = useParams();
@@ -11,8 +40,8 @@ const SingleArticlePage = () => {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/blogs/${id}`);
-        setArticle(res.data);
+        const res = await axios.get(`https://finbangla-voice-backend-production.up.railway.app/api/posts/${id}`);
+        setArticle(res.data.post || res.data);
       } catch (error) {
         console.error('Failed to load article:', error);
       }
@@ -33,13 +62,19 @@ const SingleArticlePage = () => {
     <section className="bg-white py-16 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Article Image */}
-        {article.image && (
+        <div className="mb-6 aspect-[16/9] overflow-hidden rounded-xl bg-gray-100">
           <img
-            src={article.image}
+            src={article.image || fallbackImage}
             alt={article.title}
-            className="w-full h-64 object-cover rounded-xl mb-6"
+            className="h-full w-full object-cover object-center"
+            loading="lazy"
+            onError={(event) => {
+              if (event.currentTarget.src !== fallbackImage) {
+                event.currentTarget.src = fallbackImage;
+              }
+            }}
           />
-        )}
+        </div>
 
         {/* Title and Meta */}
         <h1 className="text-3xl sm:text-4xl font-bold text-indigo-800 mb-2">
@@ -50,9 +85,9 @@ const SingleArticlePage = () => {
         </div>
 
         {/* Article Content */}
-        <p className="text-gray-800 text-base sm:text-lg whitespace-pre-line leading-relaxed">
-          {article.excerpt}
-        </p>
+        <div className="text-gray-800 text-base sm:text-lg leading-relaxed">
+          {renderFormattedText(article.excerpt || article.content)}
+        </div>
 
         {/* Comments */}
         <div className="mt-10">
@@ -97,5 +132,4 @@ const SingleArticlePage = () => {
 };
 
 export default SingleArticlePage;
-
 

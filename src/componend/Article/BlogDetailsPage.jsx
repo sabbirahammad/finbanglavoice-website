@@ -1,6 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import fallbackImage from '../../assets/t.webp';
+
+const renderFormattedText = (text) => {
+  if (!text) return null;
+  const lines = text.split('\n');
+  return lines.map((line, lineIdx) => {
+    const regex = /(\*\*.*?\*\*|==.*?==)/g;
+    const parts = line.split(regex);
+    const renderedLine = parts.map((part, partIdx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={partIdx} className="font-bold text-gray-900">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('==') && part.endsWith('==')) {
+        return (
+          <mark key={partIdx} className="bg-yellow-200 text-gray-900 px-1 rounded">
+            {part.slice(2, -2)}
+          </mark>
+        );
+      }
+      return part;
+    });
+    return (
+      <span key={lineIdx}>
+        {renderedLine}
+        {lineIdx < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+};
 
 const BlogDetailsPage = () => {
   const { id } = useParams();
@@ -53,13 +82,19 @@ const BlogDetailsPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow mt-30">
       {/* Blog Image */}
-      {blog.image && (
+      <div className="mb-6 aspect-[16/9] overflow-hidden rounded bg-gray-100">
         <img
-          src={blog.image}
+          src={blog.image || fallbackImage}
           alt={blog.title}
-          className="w-full h-64 object-cover rounded mb-6"
+          className="h-full w-full object-cover object-center"
+          loading="lazy"
+          onError={(event) => {
+            if (event.currentTarget.src !== fallbackImage) {
+              event.currentTarget.src = fallbackImage;
+            }
+          }}
         />
-      )}
+      </div>
 
       {/* Blog Title & Meta */}
       <h1 className="text-3xl font-bold text-indigo-800 mb-4">{blog.title}</h1>
@@ -68,7 +103,7 @@ const BlogDetailsPage = () => {
       </div>
 
       {/* Blog Content */}
-      <p className="text-gray-700 leading-relaxed whitespace-pre-line">{blog.content}</p>
+      <div className="text-gray-700 leading-relaxed text-base sm:text-lg">{renderFormattedText(blog.excerpt || blog.content)}</div>
 
       {/* Back Button */}
       <div className="mt-10">
@@ -83,6 +118,5 @@ const BlogDetailsPage = () => {
   );
 };
 export default BlogDetailsPage;
-
 
 

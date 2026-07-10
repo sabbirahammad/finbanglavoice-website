@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaFacebookF, FaYoutube, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import image from '../../assets/s.webp'
+import image from '../../assets/t.webp'
 const TeacherIntro = () => {
   // const [teacher, setTeacher] = useState(null);
 
@@ -18,7 +18,7 @@ const TeacherIntro = () => {
 
   const teacher= {
     "id": 1,
-    "name": "Dr.SM Shofikul Alom",
+    "name": "Dr. SM Shafiqul Alam",
     "profileImage": image,
     "experienceYears": 7,
     "teachingGrades": "6 to 10",
@@ -120,5 +120,3 @@ const TeacherIntro = () => {
 };
 
 export default TeacherIntro;
-
-

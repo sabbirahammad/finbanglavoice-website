@@ -14,14 +14,13 @@ const Home = () => {
       <HeroSection />
       <TeacherIntro />
       <FeaturedCourses />
+      <BlogSection />
       {/* <SessionSection /> */}
       <TalkToJournalist/>
       <ContactBanner />
-      {/* <BlogSection /> */}
       <Footer />
     </div>
   );
 };
 
 export default Home;
-

@@ -7,7 +7,7 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa';
 import axios from 'axios';
-import image from '../assets/s.webp'
+import image from '../assets/t.webp'
 
 const JournalistFooter = () => {
   // const [footerData, setFooterData] = useState(null);
@@ -26,7 +26,7 @@ const JournalistFooter = () => {
 
   // if (!footerData) return <div className="text-center py-10 text-gray-500">Loading footer...</div>;
  const footerData = {
-   "name": "Dr.SM Shofikul Alom",
+   "name": "Dr. SM Shafiqul Alam",
     "title": "Investigative Journalist & Political Analyst",
     "bio": "Known for uncovering truths behind political turmoil, Dr. Islam has reported from some of the world’s most dangerous conflict zones.",
     "email": "finbanglavoice@gmail.com",

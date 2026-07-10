@@ -17,7 +17,7 @@ const ContactPage = () => {
     facebook: "https://www.facebook.com/profile.php?id=61560033836918",
     instagram: "https://www.instagram.com/finbanglavoice2024/",
     youtube: "https://www.youtube.com/@FinBanglaVoice",
-    journalistName: "Dr.SM Shofikul Alom",
+    journalistName: "Dr. SM Shafiqul Alam",
     journalistImage: "https://res.cloudinary.com/dpgags9kx/image/upload/v1750434052/xljjsxykdgqwlf2icbdu.jpg",
     journalistTitle: "Journalist,Professor and Sustainability specialist",
     journalistBio: "I am a researcher, professor, and development specialist with over 20 years of experience in sustainable development, policy, education, and international cooperation. I believe knowledge and skills empower people and form the foundation for effective solutions toward sustainable development. Through the FinBangla Voice YouTube platform, I work to promote democracy, human rights, and good governance in Bangladesh. For Bangla-speaking immigrants living in Finland, I offer Finnish language courses (Level 0–A2), provide advice and support on education, employment, and family-based permanent residency, and as an ambassador of Finnish education agencies, assist Bangladeshi students in gaining admission to Finnish universities and vocational colleges.",
@@ -162,7 +162,4 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
-
-
-
 

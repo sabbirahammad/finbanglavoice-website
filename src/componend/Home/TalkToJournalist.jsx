@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import image from '../../assets/s.webp';
+import image from '../../assets/t.webp';
 
 const TalkToJournalist = () => {
   const journalist = {
     email: 'finbanglavoice@gmail.com',
     whatsapp: '+358409369708',
     messenger: '',
-    name: 'Dr. SM Shofikul Alom',
+    name: 'Dr. SM Shafiqul Alam',
     title: 'Journalist,Professor and Sustainability specialist',
     image: image,
   };
@@ -105,5 +105,3 @@ const TalkToJournalist = () => {
 };
 
 export default TalkToJournalist;
-
-

@@ -17,6 +17,7 @@ const GoogleSuccess = lazy(() => import('./pages/GoogleSuccess'));
 const GoogleCallbackPage = lazy(() => import('./pages/GoogleCallbackPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const MediaPage = lazy(() => import('./pages/MediaPage'));
+const AdminPanel = lazy(() => import('./pages/AdminPanel'));
 
 // 🔀 Course components
 const Coursespage = lazy(() => import('./componend/Course/CoursesPage'));
@@ -51,6 +52,7 @@ function App() {
           <Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/media" element={<MediaPage />} />
+          <Route path="/admin" element={<AdminPanel />} />
 
           {/* 🧠 Course Routes */}
           <Route path="/courses" element={<Coursespage />} />
@@ -82,7 +84,5 @@ function App() {
 }
 
 export default App;
-
-
 
 

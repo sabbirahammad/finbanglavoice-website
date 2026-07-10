@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import image from '../../assets/FinBangla-Voice-Logo_3.webp';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const { user, logout, loading } = useAuth();
 
   const handleLogout = () => {
@@ -149,9 +148,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
 
 
 

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import RatingStars from './RatingStars';
 import CourseBadge from './CourseBadge';
 import CourseStartBadge from './CourseStartBadge';
+import fallbackImage from '../../assets/t.webp';
 
 // Animation variants
 const cardVariants = {
@@ -49,14 +50,22 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
         whileHover="hover"
       >
         {/* Course Image */}
-        <motion.img
-          src={course.image}
-          alt={course.title}
-          className="w-full h-40 object-cover rounded-lg mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        />
+        <div className="mb-4 aspect-[16/10] overflow-hidden rounded-lg bg-gray-100">
+          <motion.img
+            src={course.image || fallbackImage}
+            alt={course.title}
+            className="h-full w-full object-cover object-center"
+            loading="lazy"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            onError={(event) => {
+              if (event.currentTarget.src !== fallbackImage) {
+                event.currentTarget.src = fallbackImage;
+              }
+            }}
+          />
+        </div>
 
         {/* Badge */}
         {course.badge && <CourseBadge label={course.badge} />}
@@ -152,7 +161,6 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
 };
 
 export default CourseCard;
-
 
 
 

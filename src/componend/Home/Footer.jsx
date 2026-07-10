@@ -18,7 +18,7 @@ const Footer = () => {
   //   );
 
     const footer= {
-    "name": "Dr.SM Shofikul Alom",
+    "name": "Dr. SM Shafiqul Alam",
     "title": "Investigative Journalist & Political Analyst",
     "bio": "Known for uncovering truths behind political turmoil, Dr. Islam has reported from some of the world’s most dangerous conflict zones.",
     "email": "finbanglavoice@gmail.com",
@@ -162,6 +162,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-

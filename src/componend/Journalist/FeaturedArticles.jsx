@@ -1,6 +1,7 @@
 // src/components/Journalist/FeaturedArticles.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import fallbackImage from '../../assets/t.webp';
 
 const FeaturedArticles = () => {
   // const [articles, setArticles] = useState([]);
@@ -50,11 +51,17 @@ const FeaturedArticles = () => {
             key={article.id}
             className="rounded-xl overflow-hidden bg-white shadow-sm border hover:shadow-xl transition-transform transform hover:-translate-y-1 duration-300 group"
           >
-            <div className="overflow-hidden">
+            <div className="aspect-[16/9] overflow-hidden bg-gray-100">
               <img
-                src={article.image}
+                src={article.image || fallbackImage}
                 alt={article.title}
-                className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
+                className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+                onError={(event) => {
+                  if (event.currentTarget.src !== fallbackImage) {
+                    event.currentTarget.src = fallbackImage;
+                  }
+                }}
               />
             </div>
             <div className="p-4 space-y-2">
@@ -80,5 +87,4 @@ const FeaturedArticles = () => {
 };
 
 export default FeaturedArticles;
-
 
