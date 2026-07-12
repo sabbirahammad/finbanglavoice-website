@@ -572,15 +572,17 @@ const AdminPanel = () => {
                       <div className="flex gap-2">
                         <button
                           type="button"
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => insertFormat('**', '**')}
-                          className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-bold border border-gray-300"
+                          className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300 font-bold border border-gray-300 cursor-pointer"
                         >
                           B (Bold)
                         </button>
                         <button
                           type="button"
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => insertFormat('==', '==')}
-                          className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 font-semibold border border-yellow-300"
+                          className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 font-semibold border border-yellow-300 cursor-pointer"
                         >
                           Highlight
                         </button>

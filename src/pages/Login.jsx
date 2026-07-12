@@ -4,7 +4,6 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     try {
       const res = await fetch('https://finbangla-voice-backend-production.up.railway.app/auth/google/login', {
-        credentials: 'include',
         method: 'GET',
       });
       const data = await res.json();
