@@ -1,138 +1,163 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { FaArrowLeft, FaWhatsapp, FaGraduationCap, FaCheckCircle, FaGlobe, FaCertificate, FaClock, FaCalendarAlt } from 'react-icons/fa';
+import Footer from './Footer';
 import image from '../../assets/t.webp';
 
-const FeaturedCourses = () => {
-  const [courses, setCourses] = useState([]);
-  const [language, setLanguage] = useState('bn');
+const CourseDetiles = () => {
+  const [language, setLanguage] = useState('en');
   const { id } = useParams();
 
-  useEffect(() => {
-    const courseList = [
-      {
-        id: '2',
-        image: image,
-        badge: 'Top Rated',
-        price: { amount: 150, currency: 'EUR', display: '€150' },
-        rating: 4.5,
-        lessons: 34,
-        level: 'Beginner',
-        title: {
-          en: '🇫🇮 Practical Finnish Language Course in Bangla (Level 0–A2)',
-          bn: '🇧🇩 বাংলায় প্রাকটিক্যাল ফিনিশ ভাষা কোর্স (স্তর ০ – A২)',
-        },
-        description: {
-          en: 'To help Bangla-speaking learners understand and use basic Finnish for everyday life, job search, and official communication.',
-          bn: 'বাংলাভাষী শিক্ষার্থীদের দ্রুত ও কার্যকরভাবে ফিনিশ ভাষার মৌলিক ব্যবহার শেখানো।',
-        },
-        details: {
-          en: `🔹 Duration: 3 Months
-🔹 Class Days: 2 classes every weekend
-🔹 Class Time: Final schedule based on group preference
-🔹 Language of Instruction: Bangla & Finnish
-🔹 Mode: Online (Zoom/Google Meet)
-🔹 Course Fee: 150 Euro (50/month)
-🔹 Certificate: Provided upon successful completion
+  const course = {
+    id: id || '2',
+    image: image,
+    badge: 'Flagship Program',
+    price: { amount: 150, currency: 'EUR', display: '150 € Total (50 € / month)' },
+    rating: 4.9,
+    lessons: 24,
+    duration: '3 Months (36 Hours Live)',
+    level: 'Beginner (Level 0 – A2)',
+    title: {
+      en: 'Practical Finnish Language Course in Bangla (Level 0 – A2)',
+      bn: 'বাংলায় প্রাকটিক্যাল ফিনিশ ভাষা কোর্স (স্তর ০ – A২)',
+    },
+    description: {
+      en: 'An intensive, structured Finnish language program designed specifically for Bengali speakers living in Finland or planning to relocate.',
+      bn: 'বাংলাভাষী শিক্ষার্থীদের দ্রুত ও কার্যকরভাবে ফিনিশ ভাষার মৌলিক ব্যবহার ও বাস্তব যোগাযোগ শেখানোর বিশেষ কোর্স।',
+    },
+    features: [
+      '24 Comprehensive Live Interactive Classes over 3 Months',
+      'Phonetics, Vowel Harmony & Everyday Spoken Finnish (Puhekieli)',
+      'Official Authority Communication (Kela, TE-palvelut, Migri)',
+      'Job Hunting, Resume Preparation & Workplace Finnish Vocabulary',
+      'YKI National Finnish Language Test Foundation',
+      'Course Completion Certificate & Lifetime Community Access'
+    ],
+    schedule: {
+      en: '2 classes every weekend (Zoom Live with Dr. SM Shafiqul Alam)',
+      bn: 'প্রতি সপ্তাহে ২টি লাইভ ক্লাস (সরাসরি ড. এস এম শফিকুল আলমের সঙ্গে)'
+    },
+    teacher: 'Dr. SM Shafiqul Alam (PhD, Professor & Senior Policy Researcher)'
+  };
 
-📚 Focus: Grammar + Vocabulary + Reading + Listening + Speaking + Writing + Real-life Use
-
-🎯 Course Goal:
-To help Bangla-speaking learners quickly and effectively understand and use basic Finnish for everyday life, job search, and official communication.
-You will learn essential grammar, practical vocabulary, sentence structures, and how to read, write, and understand simple Finnish newspapers, forms, and job advertisements.
-By the end of the course, you will be able to manage common social interactions and hold everyday conversations with confidence.
-
-👨‍🏫 Course Teacher: Dr. SM Shafiqul Alam`,
-          bn: `📆 কোর্সের মেয়াদ: ৩ মাস
-📚 ক্লাসের দিন: প্রতি সপ্তাহে ২টি ক্লাস (শুক্র/শনিবার)
-🕘 সময়: গ্রুপের সুবিধামতো সময় নির্ধারণ করা হবে
-🗣 শিক্ষার ভাষা: বাংলা ও ফিনিশ
-💻 পদ্ধতি: অনলাইন (Zoom / Google Meet)
-💶 কোর্স ফি: ১৫০ ইউরো (মাসে ৫০ ইউরো)
-📜 সার্টিফিকেট: কোর্স শেষে প্রদান করা হবে
-
-📚 কী শিখবেন:
-ব্যাকরণ + শব্দভাণ্ডার + পড়া + শোনা + বলা + লেখা + বাস্তব জীবনের ব্যবহার
-
-🎯 কোর্সের লক্ষ্য:
-বাংলাভাষী শিক্ষার্থীদের দ্রুত ও কার্যকরভাবে ফিনিশ ভাষার মৌলিক ব্যবহার শেখানো, যেন তারা দৈনন্দিন জীবন, চাকরির খোঁজ ও সরকারি যোগাযোগে স্বাচ্ছন্দ্যে ফিনিশ ব্যবহার করতে পারেন।
-এই কোর্সে আপনি শিখবেন দরকারি ব্যাকরণ, ব্যবহারিক শব্দভাণ্ডার, বাক্য গঠন, এবং কীভাবে সহজ ফিনিশ পত্রিকা, ফর্ম ও চাকরির বিজ্ঞাপন পড়তে, লিখতে ও বুঝতে হয়।
-কোর্স শেষে আপনি সাধারণ সামাজিক যোগাযোগ এবং দৈনন্দিন কথোপকথনে আত্মবিশ্বাসের সঙ্গে অংশ নিতে পারবেন।
-
-👨‍🏫 কোর্স পরিচালনায়: ড. এস এম শফিকুল আলম`,
-        },
-      },
-    ];
-
-    // Filter by URL param id
-    const matched = courseList.filter((course) => course.id === id);
-    setCourses(matched);
-  }, [id]);
+  const whatsappMessage = `Hi Dr. SM Shafiqul Alam, I would like to enroll in the "${course.title[language]}" course.`;
+  const whatsappUrl = `https://wa.me/358409369708?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <section className="bg-gray-900 py-12 px-4 text-white min-h-screen mt-14">
-      <div className="max-w-4xl mx-auto">
-        {/* Language Switcher */}
-        <div className="flex justify-end mb-6">
-          <button
-            onClick={() => setLanguage('en')}
-            className={`py-2 px-4 rounded-l-lg ${
-              language === 'en' ? 'bg-blue-700' : 'bg-blue-500'
-            } text-white font-semibold`}
-          >
-            English
-          </button>
-          <button
-            onClick={() => setLanguage('bn')}
-            className={`py-2 px-4 rounded-r-lg ${
-              language === 'bn' ? 'bg-green-700' : 'bg-green-500'
-            } text-white font-semibold`}
-          >
-            বাংলা
-          </button>
-        </div>
+    <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
+      <main className="py-14 flex-grow">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          
+          {/* Top Bar Navigation & Language Switcher */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              to="/courses"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition"
+            >
+              <FaArrowLeft className="text-[10px]" />
+              <span>Back to All Courses</span>
+            </Link>
 
-        {/* Course Details */}
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            className="bg-[#1A1A1A] rounded-2xl shadow-lg p-6 mb-10"
-          >
-            <div className="flex flex-col lg:flex-row gap-6">
-              <img
-                src={course.image}
-                alt={course.title[language]}
-                className="w-full lg:w-1/3 h-64 object-cover rounded-lg"
-              />
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-blue-400 mb-2">
-                  {course.title[language]}
-                </h2>
-                <p className="text-gray-300 mb-4">
-                  {course.description[language]}
-                </p>
-                <pre className="whitespace-pre-wrap text-sm text-gray-200 bg-gray-800 p-4 rounded-lg">
-                  {course.details[language]}
-                </pre>
-
-                {/* WhatsApp Button */}
-                <a
-                  href={`https://wa.me/+358409369708?text=${encodeURIComponent(
-                    `Hi, I want to enroll in the "${course.title[language]}" course.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300">
-                    📱 Enroll Now on WhatsApp
-                  </button>
-                </a>
-              </div>
+            <div className="inline-flex items-center rounded-xl bg-slate-900 border border-slate-800 p-1">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  language === 'en'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLanguage('bn')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  language === 'bn'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                বাংলা
+              </button>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
+
+          {/* Main Card */}
+          <div className="rounded-3xl bg-[#0F172A] border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+              <div className="md:col-span-5">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border border-slate-700/60 shadow-lg">
+                  <img
+                    src={course.image}
+                    alt={course.title[language]}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="md:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-cyan-300 text-xs font-semibold border border-blue-500/25">
+                  <FaGraduationCap />
+                  <span>{course.badge}</span>
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                  {course.title[language]}
+                </h1>
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  {course.description[language]}
+                </p>
+
+                <div className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] text-slate-400 uppercase tracking-wider block font-bold">Course Investment</span>
+                    <span className="text-lg sm:text-xl font-black text-emerald-400">{course.price.display}</span>
+                  </div>
+                  <span className="text-xs text-slate-300">{course.duration}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Features & Syllabus Checklist */}
+            <div className="pt-6 border-t border-slate-800 space-y-4">
+              <h2 className="text-lg font-bold text-white">What You Will Master:</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {course.features.map((feat, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 p-2.5 rounded-xl bg-slate-800/30 border border-slate-800">
+                    <FaCheckCircle className="text-cyan-400 shrink-0 mt-0.5" />
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Instructor & CTA */}
+            <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-xs text-slate-400">
+                <span>Course Instructor: </span>
+                <strong className="text-white">{course.teacher}</strong>
+              </div>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm text-center transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 active:scale-95"
+              >
+                <FaWhatsapp className="text-base" />
+                <span>Enroll Directly on WhatsApp</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 
-export default FeaturedCourses;
+export default CourseDetiles;

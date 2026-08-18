@@ -1,56 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { motion } from 'framer-motion';
+import { FaWhatsapp, FaEnvelope, FaCalendarCheck, FaArrowRight } from 'react-icons/fa';
 
 const ContactBanner = () => {
-  // const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchBanner = async () => {
-  //     try {
-  //       const res = await axios.get('http://localhost:3000/contactBanner');
-  //       setData(res.data);
-  //     } catch (error) {
-  //       console.error('Error fetching contact banner:', error);
-  //     }
-  //   };
-
-  //   fetchBanner();
-  // }, []);
-
-  // if (!data) return <div className="text-center py-20">Loading contact info...</div>;
-
-  const data = {
-    "headline": "📘 Let’s Talk About Your Learning Journey",
-    "subtext": "Whether you have a question, need guidance, or want to book a free consultation — I’m here to support you every step of the way.",
-    "note": "Responsive, supportive, and always student-focused.",
-    "cardTitle": "Need Help? 🤔",
-    "cardMessage": "Reach out now and I’ll personally get back to you within 24 hours!",
-    "buttonText": "✉️ Contact Now"
-  }
+  const contactInfo = {
+    whatsapp: '+358409369708',
+    email: 'finbanglavoice@gmail.com',
+  };
 
   return (
-    <section className="bg-black text-white py-16 px-6 sm:px-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        {/* Left: Text Content */}
-        <div>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-            {data.headline}
-          </h2>
-          <p className="text-white/90 text-base sm:text-lg mb-6">{data.subtext}</p>
-          <p className="text-sm text-white/80">{data.note}</p>
-        </div>
+    <section className="py-20 bg-[#0F172A] relative overflow-hidden border-t border-slate-800/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative rounded-3xl bg-gradient-to-r from-blue-900/60 via-slate-900 to-cyan-950/60 border border-blue-500/30 p-8 sm:p-12 lg:p-14 shadow-2xl overflow-hidden"
+        >
+          {/* Subtle Glows */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        {/* Right: Contact Action Box */}
-        <div className="bg-white text-gray-800 rounded-2xl shadow-lg p-8 sm:p-10 text-center">
-          <h3 className="text-xl font-semibold mb-4">{data.cardTitle}</h3>
-          <p className="text-gray-600 mb-6 text-sm">{data.cardMessage}</p>
-          <Link to="/contact">
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all shadow-md">
-              {data.buttonText}
-            </button>
-          </Link>
-        </div>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                <FaCalendarCheck />
+                <span>Start Your Finnish Journey</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                Ready to Learn Finnish or Study in <span className="bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">Finland?</span>
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
+                Get direct guidance on course batches, university admissions, and Nordic relocation from Dr. SM Shafiqul Alam. Reach out today!
+              </p>
+            </div>
+
+            {/* Right Action Box */}
+            <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
+              <a
+                href={`https://wa.me/${contactInfo.whatsapp.replace(/\D/g, '')}?text=Hello%20FinBangla%20Voice%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-900/30 active:scale-95 text-sm"
+              >
+                <FaWhatsapp className="text-lg" />
+                <span>Chat on WhatsApp (+358 40 9369708)</span>
+              </a>
+
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-all shadow-md active:scale-95 text-sm"
+              >
+                <FaEnvelope className="text-sm" />
+                <span>Send Message / Book Consultation</span>
+                <FaArrowRight className="text-xs" />
+              </Link>
+            </div>
+
+          </div>
+        </motion.div>
       </div>
     </section>
   );

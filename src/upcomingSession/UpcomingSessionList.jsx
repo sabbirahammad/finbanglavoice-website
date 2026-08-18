@@ -1,23 +1,23 @@
-// src/components/UpcomingSessions/UpcomingSessionList.jsx
 import React from 'react';
 import UpcomingSessionCard from './UpcomingSessionCard';
+import { FaVideoSlash } from 'react-icons/fa';
 
 const UpcomingSessionList = ({ sessions }) => {
   if (!sessions || sessions.length === 0) {
     return (
-      <div className="text-center text-gray-500 bg-white rounded-xl p-8 shadow-md mt-10">
-        🚫 No upcoming sessions found.
+      <div className="text-center text-slate-400 bg-[#0F172A] border border-slate-800 rounded-3xl p-12 shadow-xl max-w-xl mx-auto space-y-3">
+        <FaVideoSlash className="text-3xl text-slate-600 mx-auto" />
+        <h3 className="text-base font-bold text-white">No Upcoming Sessions Found</h3>
+        <p className="text-xs text-slate-400">
+          Try changing your filter options or search term. New workshops are scheduled regularly.
+        </p>
       </div>
     );
   }
 
   return (
     <section className="w-full">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-800">🗓️ {sessions.length} Upcoming Session{sessions.length > 1 ? 's' : ''}</h2>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {sessions.map((session) => (
           <UpcomingSessionCard key={session.id} session={session} />
         ))}
@@ -27,4 +27,3 @@ const UpcomingSessionList = ({ sessions }) => {
 };
 
 export default UpcomingSessionList;
-

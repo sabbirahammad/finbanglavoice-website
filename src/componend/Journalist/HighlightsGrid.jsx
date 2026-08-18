@@ -1,85 +1,57 @@
-// src/components/Journalist/HighlightsGrid.jsx
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Globe, Award, CalendarCheck, FileText } from 'lucide-react';
-
-const iconMap = {
-  FileText: FileText,
-  Award: Award,
-  Globe: Globe,
-  CalendarCheck: CalendarCheck
-};
+import React from 'react';
+import { FaGraduationCap, FaLanguage, FaPassport, FaBullhorn } from 'react-icons/fa';
 
 const HighlightsGrid = () => {
-  // const [highlights, setHighlights] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:3000/highlights')
-  //     .then(res => setHighlights(res.data))
-  //     .catch(err => {
-  //       console.error("Failed to fetch highlights:", err);
-  //       setHighlights([]);
-  //     });
-  // }, []);
-
- const highlights = [
+  const highlights = [
     {
-      "id": "0552",
-      "label": "Awards Won",
-      "value": "12+",
-      "icon": "Award",
-      "color": "text-yellow-500"
+      icon: <FaLanguage className="text-2xl text-blue-400" />,
+      title: 'Finnish Language Mastery (A0–A2)',
+      desc: 'Expert language coaching designed specifically for Bengali speakers living in or relocating to Finland.',
     },
     {
-      "id": "8cb6",
-      "label": "Article",
-      "value": "15+",
-      "icon": "FileText",
-      "color": "text-green-500"
+      icon: <FaGraduationCap className="text-2xl text-cyan-400" />,
+      title: 'University & Vocational Admissions',
+      desc: 'Official ambassador guidance on degree programs, UAS entrance exams, and vocational training in Finland.',
     },
     {
-      "id": "0904",
-      "label": "Novel win",
-      "value": "1",
-      "icon": "Activity",
-      "color": "text-blue-500"
+      icon: <FaPassport className="text-2xl text-emerald-400" />,
+      title: 'Residence Permit & Relocation',
+      desc: 'Accurate advisory on student D-visas, family reunification, permanent residency (PR), and employment integration.',
     },
-     {
-      "id": "0552",
-      "label": "Awards Won",
-      "value": "12+",
-      "icon": "Award",
-      "color": "text-yellow-500"
+    {
+      icon: <FaBullhorn className="text-2xl text-amber-400" />,
+      title: 'Media & Democracy Dialogue',
+      desc: 'Leading policy discussions, investigative human rights reporting, and diaspora networking on YouTube.',
     },
-  ]
+  ];
 
   return (
-    <section className="bg-white p-6 sm:p-10 rounded-2xl shadow-md mb-10 mt-4">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
-        🚀 Career Highlights
-      </h2>
+    <section className="mb-10">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+          Key Pillars of Work
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          Bridging education, language, and policy between Bangladesh and the Nordic region.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-        {highlights.map((item) => {
-          const Icon = iconMap[item.icon] || FileText;
-          return (
-            <div
-              key={item.id}
-              className="flex flex-col items-center text-center p-4 rounded-xl bg-gradient-to-br from-gray-50 via-white to-gray-100 shadow hover:shadow-md transition hover:-translate-y-1"
-            >
-              <div className="bg-white p-3 rounded-full shadow-md mb-2 border border-gray-200">
-                <Icon className={`w-6 h-6 ${item.color}`} />
-              </div>
-              <p className="text-xl font-bold text-indigo-700">{item.value}</p>
-              <p className="text-sm text-gray-600">{item.label}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {highlights.map((h, i) => (
+          <div
+            key={i}
+            className="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 space-y-3 shadow-lg hover:border-slate-700 transition"
+          >
+            <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center">
+              {h.icon}
             </div>
-          );
-        })}
+            <h3 className="text-base font-bold text-white">{h.title}</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">{h.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
 };
 
 export default HighlightsGrid;
-
-

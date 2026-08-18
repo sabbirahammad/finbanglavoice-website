@@ -1,164 +1,253 @@
-import React, { useState, lazy, Suspense, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Tilt from 'react-parallax-tilt';
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+  FaYoutube,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaPlayCircle,
+  FaPodcast,
+  FaVideo,
+  FaUsers,
+  FaGlobeEurope,
+  FaGraduationCap,
+  FaBullhorn,
+  FaArrowRight
+} from 'react-icons/fa';
+import Footer from '../componend/Home/Footer';
 
-// Lazy load icons
-const LazyFaFacebookF = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaFacebookF })));
-const LazyFaTwitter = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaTwitter })));
-const LazyFaInstagram = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaInstagram })));
-const LazyFaLinkedinIn = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaLinkedinIn })));
-const LazyFaYoutube = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaYoutube })));
-const LazyFaGithub = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaGithub })));
+const MediaPage = () => {
+  const channelStats = [
+    { label: 'YouTube Platform', value: '@FinBanglaVoice', icon: <FaYoutube className="text-rose-500 text-xl" /> },
+    { label: 'Community Focus', value: 'Education & Policy', icon: <FaGlobeEurope className="text-cyan-400 text-xl" /> },
+    { label: 'Bengali Diaspora', value: 'Finland & Nordic', icon: <FaUsers className="text-blue-400 text-xl" /> },
+    { label: 'Dialogues & Talks', value: '150+ Broadcasts', icon: <FaPodcast className="text-amber-400 text-xl" /> },
+  ];
 
-const socialLinks = [
-  {
-    name: 'Facebook',
-    icon: <LazyFaFacebookF />,
-    url: 'https://www.facebook.com/profile.php?id=61560033836918',
-    color: 'bg-blue-600 hover:bg-blue-700',
-    stats: { followers: '1.2M', posts: '5K' },
-  },
-  {
-    name: 'Twitter',
-    icon: <LazyFaTwitter />,
-    url: 'https://www.instagram.com/finbanglavoice2024/',
-    color: 'bg-sky-500 hover:bg-sky-600',
-    stats: { followers: '850K', posts: '10K' },
-  },
-  {
-    name: 'Instagram',
-    icon: <LazyFaInstagram />,
-    url: 'https://www.instagram.com/finbanglavoice2024/',
-    color: 'bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700',
-    stats: { followers: '2.5M', posts: '8K' },
-  },
-  {
-    name: 'LinkedIn',
-    icon: <LazyFaLinkedinIn />,
-    url: 'https://linkedin.com',
-    color: 'bg-blue-700 hover:bg-blue-800',
-    stats: { followers: '500K', posts: '2K' },
-  },
-  {
-    name: 'YouTube',
-    icon: <LazyFaYoutube />,
-    url: 'https://www.youtube.com/@FinBanglaVoice',
-    color: 'bg-red-600 hover:bg-red-700',
-    stats: { followers: '3M', posts: '1.5K' },
-  },
-  {
-    name: 'GitHub',
-    icon: <LazyFaGithub />,
-    url: 'https://www.youtube.com/@FinBanglaVoice',
-    color: 'bg-gray-800 hover:bg-gray-900',
-    stats: { followers: '400K', posts: 'N/A' },
-  },
-];
+  const videoCategories = [
+    {
+      icon: <FaGraduationCap className="text-2xl text-blue-400" />,
+      title: 'Finnish Language Video Lessons',
+      bengaliTitle: 'বাংলায় ফিনিশ ভাষা শিক্ষা ভিডিও',
+      desc: 'Free introductory video lessons covering Finnish alphabets, essential verbs, numbers, shopping, and everyday conversational phrases.',
+      badge: 'Language Hub',
+      linkText: 'Watch on YouTube',
+      url: 'https://www.youtube.com/@FinBanglaVoice',
+    },
+    {
+      icon: <FaGlobeEurope className="text-2xl text-cyan-400" />,
+      title: 'Study & Work in Finland Guides',
+      bengaliTitle: 'ফিনল্যান্ডে উচ্চশিক্ষা ও ক্যারিয়ার গাইড',
+      desc: 'Comprehensive step-by-step video tutorials on Joint Application (Studyinfo.fi), AMK admissions, student visas, and living in Finland.',
+      badge: 'Admissions & PR',
+      linkText: 'Explore Admission Series',
+      url: 'https://www.youtube.com/@FinBanglaVoice',
+    },
+    {
+      icon: <FaBullhorn className="text-2xl text-rose-400" />,
+      title: 'Democracy, Governance & Human Rights',
+      bengaliTitle: 'গণতন্ত্র, সুশাসন ও মানবাধিকার সংলাপ',
+      desc: 'In-depth interviews, political analysis, and critical dialogues on institutional reforms, good governance, and human rights in Bangladesh.',
+      badge: 'Independent Media',
+      linkText: 'Watch Policy Dialogues',
+      url: 'https://www.youtube.com/@FinBanglaVoice',
+    },
+    {
+      icon: <FaUsers className="text-2xl text-emerald-400" />,
+      title: 'Diaspora Stories & Life in the Nordics',
+      bengaliTitle: 'প্রবাসী জীবন ও নর্ডিক অভিজ্ঞতা',
+      desc: 'Real stories, career transitions, and integration experiences of Bangladeshi students, researchers, and professionals living in Finland.',
+      badge: 'Community Voices',
+      linkText: 'Watch Community Series',
+      url: 'https://www.youtube.com/@FinBanglaVoice',
+    },
+  ];
 
-const themes = {
-  light: 'bg-gradient-to-br from-indigo-100 to-purple-100',
-  dark: 'bg-gray-900',
-  neon: 'bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900',
-};
-
-const iconVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' },
-  }),
-  click: { scale: 0.9, transition: { duration: 0.2, ease: 'easeInOut' } },
-};
-
-const SocialMediaLinks = () => {
-  const [theme, setTheme] = useState('light');
-  const [shareCounts, setShareCounts] = useState(socialLinks.map(() => 0));
-  const audioRef = useRef(new Audio('https://cdn.pixabay.com/audio/2023/01/18/audio_6c4184b5c7.mp3'));
-
-  const handleClick = (index) => {
-    audioRef.current.play().catch(() => {});
-    setShareCounts((prev) => {
-      const newCounts = [...prev];
-      newCounts[index] += 1;
-      return newCounts;
-    });
-  };
-
-  const handleThemeChange = (e) => {
-    const newTheme = e.target.value;
-    setTheme(newTheme);
-    document.documentElement.classList.remove('light', 'dark', 'neon');
-    document.documentElement.classList.add(newTheme);
-  };
+  const socialPlatforms = [
+    {
+      name: 'YouTube Channel',
+      handle: '@FinBanglaVoice',
+      desc: 'Subscribe for weekly Finnish lessons, admission updates, and live talk shows.',
+      url: 'https://www.youtube.com/@FinBanglaVoice',
+      icon: <FaYoutube className="text-2xl text-rose-500" />,
+      btnText: 'Subscribe on YouTube',
+      btnClass: 'bg-rose-600 hover:bg-rose-500 text-white',
+    },
+    {
+      name: 'Facebook Community',
+      handle: 'FinBangla Voice Official',
+      desc: 'Join discussions with Bangladeshi students, applicants, and residents in Finland.',
+      url: 'https://www.facebook.com/profile.php?id=61560033836918',
+      icon: <FaFacebookF className="text-2xl text-blue-400" />,
+      btnText: 'Join Facebook Page',
+      btnClass: 'bg-blue-600 hover:bg-blue-500 text-white',
+    },
+    {
+      name: 'Instagram Updates',
+      handle: '@finbanglavoice2024',
+      desc: 'Daily vocabulary highlights, student tips, and event announcements.',
+      url: 'https://www.instagram.com/finbanglavoice2024/',
+      icon: <FaInstagram className="text-2xl text-pink-400" />,
+      btnText: 'Follow on Instagram',
+      btnClass: 'bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 text-white',
+    },
+    {
+      name: 'LinkedIn Thought Leadership',
+      handle: 'Dr. SM Shafiqul Alam',
+      desc: 'Academic research papers, sustainable development policy, and university collaborations.',
+      url: 'https://linkedin.com',
+      icon: <FaLinkedinIn className="text-2xl text-sky-400" />,
+      btnText: 'Connect on LinkedIn',
+      btnClass: 'bg-sky-600 hover:bg-sky-500 text-white',
+    },
+  ];
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 sm:p-6 ${themes[theme]} animate-gradient-bg`}>
-      <div className="w-full max-w-3xl bg-white/20 dark:bg-gray-800/20 neon:bg-black/20 backdrop-blur-lg rounded-2xl shadow-2xl p-6 sm:p-8 border border-gradient-to-r from-purple-500 to-indigo-500">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <h2 className={`text-3xl sm:text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 neon:from-pink-500 neon:to-cyan-500 ${theme === 'neon' ? 'animate-glow' : ''}`}>
-            Connect with Us
-          </h2>
-          <select
-            value={theme}
-            onChange={handleThemeChange}
-            className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 neon:bg-black/50 text-gray-800 dark:text-gray-200 neon:text-cyan-300 border border-gray-300 dark:border-gray-600 neon:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            aria-label="Select theme"
-          >
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="neon">Neon</option>
-          </select>
+    <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
+      
+      {/* Header Banner */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-[#0F172A] to-[#0B1120] border-b border-slate-800/80 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-400 text-xs font-semibold uppercase tracking-wider">
+            <FaVideo />
+            <span>Broadcast & Multimedia Platform</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+            FinBangla Voice <span className="bg-gradient-to-r from-rose-400 via-orange-300 to-amber-300 bg-clip-text text-transparent">Media Hub</span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            Independent journalism, Finnish language lessons, higher education roadmaps, and policy dialogues hosted by <strong>Dr. SM Shafiqul Alam</strong>.
+          </p>
+
+          {/* Quick Stats Strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6">
+            {channelStats.map((st, i) => (
+              <div key={i} className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center space-y-1">
+                <div className="flex justify-center mb-1">{st.icon}</div>
+                <h4 className="text-xs sm:text-sm font-bold text-white">{st.value}</h4>
+                <p className="text-[11px] text-slate-400">{st.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-          <Suspense fallback={<div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gray-200 dark:bg-gray-700 neon:bg-black/50 animate-pulse" />}>
-            <AnimatePresence>
-              {socialLinks.map((social, index) => (
-                <motion.div
-                  key={index}
-                  custom={index}
-                  initial="hidden"
-                  animate="visible"
-                  variants={iconVariants}
-                  whileTap="click"
-                  className="relative group"
-                >
-                  <Tilt
-                    tiltMaxAngleX={25}
-                    tiltMaxAngleY={25}
-                    scale={1.1}
-                    transitionSpeed={400}
+      </section>
+
+      {/* Video Content Categories */}
+      <section className="py-16 flex-grow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Curated Video Broadcasts & Series
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300">
+              Browse structured video playlists created to help students, immigrants, and researchers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {videoCategories.map((cat, idx) => (
+              <motion.div
+                key={idx}
+                className="p-8 rounded-2xl bg-[#0F172A] border border-slate-800 hover:border-slate-700 transition-all duration-300 shadow-xl flex flex-col justify-between group hover:-translate-y-1"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center">
+                      {cat.icon}
+                    </div>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                      {cat.badge}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition">
+                      {cat.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 font-medium mt-0.5">{cat.bengaliTitle}</p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {cat.desc}
+                  </p>
+                </div>
+
+                <div className="pt-6 mt-4 border-t border-slate-800/80">
+                  <a
+                    href={cat.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-rose-400 hover:text-rose-300 transition"
                   >
-                    <a
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleClick(index)}
-                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white text-xl sm:text-2xl shadow-[0_4px_10px_rgba(0,0,0,0.3)] dark:shadow-[0_4px_10px_rgba(0,0,0,0.5)] neon:shadow-[0_4px_10px_rgba(0,255,255,0.3)] transition-transform ${social.color}`}
-                      aria-label={`Visit our ${social.name} page`}
-                    >
-                      {social.icon}
-                    </a>
-                  </Tilt>
-                  <span className="absolute -top-14 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-800 dark:bg-gray-600 neon:bg-black/70 text-white neon:text-cyan-300 text-xs rounded py-1 px-2 text-center">
-                    {social.name}
-                    <br />
-                    {social.stats.followers} Followers
-                    <br />
-                    {social.stats.posts} Posts
-                  </span>
-                  <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 dark:text-gray-300 neon:text-cyan-400">
-                    {/* {shareCounts[index]} Shares */}
-                  </span>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </Suspense>
+                    <FaPlayCircle className="text-base" />
+                    <span>{cat.linkText}</span>
+                    <FaArrowRight className="text-[10px]" />
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
-      </div>
+      </section>
+
+      {/* Social Network Hub */}
+      <section className="py-16 bg-[#0F172A] border-t border-slate-800/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Connect Across Official Social Channels
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400">
+              Join thousands of community members across our platforms for daily updates and live discussions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {socialPlatforms.map((soc, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-2xl bg-[#0B1120] border border-slate-800 flex flex-col justify-between text-center space-y-4 shadow-lg"
+              >
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-xl bg-slate-800 mx-auto flex items-center justify-center">
+                    {soc.icon}
+                  </div>
+                  <h3 className="text-base font-bold text-white">{soc.name}</h3>
+                  <p className="text-xs text-cyan-400 font-semibold">{soc.handle}</p>
+                  <p className="text-xs text-slate-400 leading-relaxed">{soc.desc}</p>
+                </div>
+
+                <a
+                  href={soc.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-2.5 rounded-xl font-semibold text-xs transition shadow-md ${soc.btnClass}`}
+                >
+                  {soc.btnText}
+                </a>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* Global Footer */}
+      <Footer />
     </div>
   );
 };
 
-export default SocialMediaLinks;
-
+export default MediaPage;

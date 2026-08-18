@@ -1,68 +1,103 @@
 import React from 'react';
-import { Video, User } from 'lucide-react';
-import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import {
+  FaVideo,
+  FaCalendarAlt,
+  FaClock,
+  FaWhatsapp,
+  FaEnvelope,
+  FaChalkboardTeacher,
+  FaCheckCircle,
+  FaEuroSign
+} from 'react-icons/fa';
 
 const UpcomingSessionCard = ({ session }) => {
-  const totalAmount = session.duration * session.rate;
-
-  // Check if email ends with @gmail.com
-  const isGmail = session.email?.toLowerCase().endsWith('@gmail.com');
+  const rsvpWhatsappUrl = `https://wa.me/${String(session.whatsapp || '358409369708').replace(/\D/g, '')}?text=${encodeURIComponent(
+    `Hi Dr. SM Shafiqul Alam, I would like to reserve my seat for the live session: "${session.title}".`
+  )}`;
 
   return (
-    <div className="bg-gradient-to-tr from-white to-gray-50 p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition duration-300 space-y-4 h-full flex flex-col justify-between">
-      {/* Title */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-gray-800">{session.title}</h3>
-        <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-          {session.mode}
-        </span>
-      </div>
+    <motion.article
+      className="p-6 sm:p-7 rounded-2xl bg-[#0F172A] border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 shadow-xl flex flex-col justify-between h-full group hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-900/10"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="space-y-4">
+        
+        {/* Top Badges */}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/25">
+            <FaVideo className="text-[10px]" />
+            {session.mode || 'Live Zoom'}
+          </span>
+          <span className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+            <FaClock className="text-blue-400" />
+            {session.duration ? `${session.duration} Hours` : '1.5 Hours'}
+          </span>
+        </div>
 
-      {/* Info Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-        <p className="flex items-center gap-2">
-          <User className="w-4 h-4 text-green-500" /> <span>{session.instructor}</span>
+        {/* Title */}
+        <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition leading-snug">
+          {session.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          {session.description || 'Interactive live session with open Q&A and practical guidance.'}
         </p>
-        <p className="flex items-center gap-2">
-          <Video className="w-4 h-4 text-purple-500" /> <span>{session.mode}</span>
-        </p>
-        <p><strong>Duration:</strong> {session.duration} hr</p>
-        <p><strong>Rate:</strong> {session.rate} €/hr</p>
-        <p><strong>Total:</strong> <span className="text-green-600 font-semibold">{totalAmount} €</span></p>
+
+        {/* Schedule & Info Box */}
+        <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-300 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400 flex items-center gap-1.5">
+              <FaChalkboardTeacher className="text-blue-400" /> Host:
+            </span>
+            <span className="font-semibold text-white">{session.instructor || 'Dr. SM Shafiqul Alam'}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400 flex items-center gap-1.5">
+              <FaCalendarAlt className="text-cyan-400" /> Date & Time:
+            </span>
+            <span className="font-semibold text-cyan-300">{session.date || 'Upcoming Weekend'} • {session.time || 'Evening Batch'}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400 flex items-center gap-1.5">
+              <FaEuroSign className="text-emerald-400" /> Fee:
+            </span>
+            <span className="font-bold text-emerald-400">
+              {session.rate > 0 ? `${session.rate} €` : 'Free / Open to Registered Students'}
+            </span>
+          </div>
+        </div>
+
       </div>
 
-      {/* Description */}
-      <div className="bg-gray-100 text-gray-800 p-3 rounded-md text-sm">
-        <p className="font-medium">📘 Session Overview:</p>
-        <p>{session.description}</p>
-      </div>
-
-      {/* Contact Buttons */}
-      <div className="flex gap-3 pt-3">
+      {/* Action Buttons */}
+      <div className="grid grid-cols-2 gap-3 pt-5 mt-6 border-t border-slate-800/80">
         <a
-          href={`https://wa.me/${session.whatsapp?.replace('+', '')}`}
+          href={rsvpWhatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-2 rounded-full text-sm font-medium transition"
+          className="py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold text-xs text-center transition shadow-md flex items-center justify-center gap-1.5 active:scale-95"
         >
-          <FaWhatsapp /> WhatsApp
+          <FaWhatsapp className="text-sm" />
+          <span>Reserve Seat</span>
         </a>
 
-        {isGmail && (
-          <a
-            href={`mailto:${session.email}`}
-            className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-full text-sm font-medium transition"
-          >
-            <FaEnvelope /> Gmail
-          </a>
-        )}
+        <a
+          href={`mailto:${session.email || 'finbanglavoice@gmail.com'}?subject=Inquiry regarding live session: ${encodeURIComponent(session.title)}`}
+          className="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs text-center transition border border-slate-700 flex items-center justify-center gap-1.5"
+        >
+          <FaEnvelope className="text-xs" />
+          <span>Email Details</span>
+        </a>
       </div>
-    </div>
+    </motion.article>
   );
 };
 
 export default UpcomingSessionCard;
-
-
-
-

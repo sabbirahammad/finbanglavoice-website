@@ -1,133 +1,101 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typewriter } from 'react-simple-typewriter';
+import { FaGraduationCap, FaFilter } from 'react-icons/fa';
 import CourseGrid from './CourseGrid';
-import JournalistFooter from '../../pages/JournalistFooter';
+import CourseFilterBar from './CourseFilterBar';
+import Footer from '../Home/Footer';
 import { API_BASE_URL } from '../../config/api';
+import fallbackImage from '../../assets/t.webp';
 
-import image from '../../assets/t.webp';
-
-const allCourses = [
+const defaultCourses = [
   {
-    id: "2",
-    title: "Finnish Language Course",
+    id: "course-finnish-a1",
+    title: "Practical Finnish Language Course in Bangla (Level 0 – A1)",
     subject: "Language",
-    level: "Beginner",
-    description: "Learn the basics of the Finnish language, including pronunciation, and everyday conversation.",
-    price: { amount: 49, currency: "EUR", display: "€49" },
+    level: "Beginner (A0–A1)",
+    description: "Learn essential Finnish pronunciation, everyday greetings, shopping, numbers, basic grammar, and conversation skills tailored for Bengali speakers.",
+    price: { amount: 50, currency: "EUR", display: "50 € / Month" },
     lessons: 24,
-    durationHours: 12,
-    rating: 4.5,
-    enrolled: 1200,
-    badge: "Top Rated",
-    startDate: "2025-07-15",
-    image: image,
+    durationHours: 36,
+    rating: 4.9,
+    enrolled: 1850,
+    badge: "Most Popular",
+    startDate: "New Batch Starting Soon",
+    image: fallbackImage,
   },
   {
-    id: "3",
-    title: "Climate Change",
-    subject: "Environmental Science",
-    level: "Beginner",
-    description: "A comprehensive introduction to the science of climate change, its impacts, and actions to address the crisis.",
-    price: { amount: 79, currency: "EUR", display: "€79" },
-    lessons: 18,
-    durationHours: 10,
+    id: "course-finnish-a2",
+    title: "Intermediate Finnish & Workplace Spoken (Level A1 – A2)",
+    subject: "Language",
+    level: "Intermediate (A1–A2)",
+    description: "Designed for job seekers and residents. Master workplace conversations, official authority communication (Kela, TE-palvelut), and YKI exam fundamentals.",
+    price: { amount: 60, currency: "EUR", display: "60 € / Month" },
+    lessons: 24,
+    durationHours: 36,
     rating: 4.8,
-    enrolled: 850,
-    badge: "Best Seller",
-    startDate: "2025-08-01",
-    image: image,
+    enrolled: 920,
+    badge: "Career Focused",
+    startDate: "Evening Schedule",
+    image: fallbackImage,
   },
   {
-    id: "4",
-    title: "Sustainability Course",
-    subject: "Sustainability & Environment",
-    level: "Intermediate",
-    description: "Explore the core principles of sustainability, addressing environmental, social, and economic dimensions.",
-    price: { amount: 69, currency: "EUR", display: "€69" },
-    lessons: 20,
-    durationHours: 11,
-    rating: 4.2,
-    enrolled: 600,
-    badge: "New",
-    startDate: "2025-07-20",
-    image: image,
+    id: "course-study-finland",
+    title: "Higher Education in Finland: University & AMK Admission Masterclass",
+    subject: "Education",
+    level: "All Levels",
+    description: "Complete walkthrough of Studyinfo.fi admissions, university selection, scholarship acquisition, SOP reviews, and student residence permit procedures.",
+    price: { amount: 80, currency: "EUR", display: "80 € Total" },
+    lessons: 8,
+    durationHours: 16,
+    rating: 5.0,
+    enrolled: 1450,
+    badge: "Official Advisory",
+    startDate: "Next Intake Workshop",
+    image: fallbackImage,
   },
 ];
 
 const CoursesPage = () => {
-  const location = useLocation();
-  const stateCourse = location.state?.selectedCourse;
-
-  const [courses, setCourses] = useState(allCourses);
-  const [loadingCourses, setLoadingCourses] = useState(true);
-  const [courseError, setCourseError] = useState('');
+  const [courses, setCourses] = useState(defaultCourses);
+  const [loadingCourses, setLoadingCourses] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubject] = useState('all');
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(6);
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    const currentTheme = document.documentElement.classList.contains('dark')
-      ? 'dark'
-      : document.documentElement.classList.contains('neon')
-      ? 'neon'
-      : 'light';
-    setTheme(currentTheme);
-  }, []);
-
-  useEffect(() => {
-    if (stateCourse) {
-      setSelectedCourse(stateCourse);
-    }
-  }, [stateCourse]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     const loadCourses = async () => {
       setLoadingCourses(true);
-      setCourseError('');
-
       try {
         const response = await fetch(`${API_BASE_URL}/api/courses`);
         const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data?.message || 'Failed to load courses');
+        if (response.ok) {
+          const courseList = Array.isArray(data) ? data : data?.courses || [];
+          if (courseList.length > 0) {
+            const mappedCourses = courseList.map((c) => ({
+              id: c.id || c.course_id,
+              title: c.course_name || 'Finnish Language Course',
+              subject: c.category || 'Language',
+              level: c.course_details?.level || 'Beginner',
+              description: c.course_details?.session_overview || 'Live interactive Finnish language program.',
+              price: {
+                amount: 50,
+                currency: 'EUR',
+                display: c.course_details?.rate || c.course_details?.total_fee || '50 € / Month',
+              },
+              lessons: 24,
+              durationHours: 36,
+              rating: 4.9,
+              enrolled: 1000,
+              badge: c.badge || 'Live Batch',
+              startDate: c.course_details?.schedule || 'Ongoing Registration',
+              image: c.instructor?.photo_url || fallbackImage,
+            }));
+            setCourses(mappedCourses);
+          }
         }
-
-        const courseList = Array.isArray(data) ? data : data?.courses || [];
-        const mappedCourses = courseList.map((course) => ({
-          id: String(course.id),
-          title: course.course_name || 'Untitled Course',
-          subject: course.course_details?.session_mode || 'Course',
-          level: course.course_details?.duration || 'Available',
-          description: course.course_details?.session_overview || 'Course details coming soon.',
-          price: {
-            amount: course.course_details?.total_fee || course.course_details?.rate || '',
-            currency: 'EUR',
-            display:
-              course.course_details?.total_fee ||
-              course.course_details?.rate ||
-              'Contact for fee',
-          },
-          lessons: course.course_details?.material || '',
-          durationHours: course.course_details?.duration || '',
-          rating: 0,
-          enrolled: 0,
-          badge: course.course_details?.session_mode || '',
-          startDate: course.course_details?.schedule || '',
-          image: course.instructor?.photo_url || image,
-          enrollment: course.enrollment,
-          contact: course.contact,
-          rawCourse: course,
-        }));
-
-        setCourses(mappedCourses.length ? mappedCourses : allCourses);
-      } catch (error) {
-        console.error('Failed to load courses:', error);
-        setCourseError('Could not load backend courses. Showing default courses.');
-        setCourses(allCourses);
+      } catch (err) {
+        console.error('Failed to load courses from API:', err);
       } finally {
         setLoadingCourses(false);
       }
@@ -137,121 +105,89 @@ const CoursesPage = () => {
   }, []);
 
   const filteredCourses = courses.filter((course) => {
-    const matchesSubject =
-      selectedSubject === 'all' || course.subject.toLowerCase() === selectedSubject;
     const matchesSearch =
       course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.subject.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSubject && matchesSearch;
+      course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (course.level && course.level.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesCategory =
+      selectedCategory === 'all' ||
+      (selectedCategory === 'language' && (course.subject.toLowerCase().includes('lang') || course.title.toLowerCase().includes('finnish'))) ||
+      (selectedCategory === 'education' && (course.subject.toLowerCase().includes('edu') || course.title.toLowerCase().includes('education') || course.title.toLowerCase().includes('admission'))) ||
+      (selectedCategory === 'masterclass' && (course.title.toLowerCase().includes('masterclass') || course.title.toLowerCase().includes('workshop')));
+
+    return matchesSearch && matchesCategory;
   });
 
-  const visibleCourses = filteredCourses.slice(0, visibleCount);
-
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 6);
-  };
-
   return (
-    <div className={`pt-24 px-4 min-h-screen ${theme === 'light' ? 'bg-[#1A1A1A]' : theme === 'dark' ? 'bg-gradient-to-b from-gray-900 to-gray-700' : 'bg-gradient-to-b from-blue-900 to-purple-900 animate-gradient-bg'}`}>
-      <section className="relative max-w-7xl mx-auto py-12 px-4 md:px-8 rounded-xl bg-white/10 dark:bg-gray-800/10 neon:bg-black/10 backdrop-blur-lg border border-transparent neon:border-cyan-500/30 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h1 className={`text-3xl md:text-5xl font-extrabold mb-4 ${theme === 'neon' ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-pink-500 animate-glow' : 'text-gray-200 dark:text-gray-200'}`}>
-              Discover Your Next Learning Adventure
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 dark:text-gray-300 neon:text-white/90 mb-6">
-              <Typewriter
-                words={['Learn New Skills', 'Master Your Passion', 'Achieve Your Goals']}
-                loop
-                cursor
-                cursorStyle="|"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
-            </p>
+    <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
+      
+      {/* Header Banner */}
+      <section className="py-16 bg-gradient-to-b from-[#0F172A] to-[#0B1120] border-b border-slate-800/80 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+            <FaGraduationCap className="text-sm" />
+            <span>Structured Educational Programs</span>
           </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+            Finnish Language & <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-sky-400 bg-clip-text text-transparent">Education Courses</span>
+          </h1>
+
+          <div className="text-base sm:text-lg text-slate-300 font-medium h-8 flex items-center justify-center">
+            <span className="text-cyan-400 mr-2">Featured Tracks:</span>
+            <Typewriter
+              words={[
+                'Finnish Level 0 – A1 for Beginners in Bengali',
+                'Intermediate Spoken & Workplace Finnish (A1–A2)',
+                'University & AMK Admissions in Finland',
+                'Residence Permit & Integration Coaching'
+              ]}
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={50}
+              deleteSpeed={30}
+              delaySpeed={2000}
+            />
+          </div>
+
+          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed pt-2">
+            Led by <strong>Dr. SM Shafiqul Alam</strong>. Live interactive Zoom sessions with comprehensive study materials, vocabulary audio packs, and personalized feedback.
+          </p>
         </div>
       </section>
 
-      {/* Only show selected course if available */}
-      {selectedCourse && (
-          <div className="bg-[#1A1A1A] rounded-2xl shadow-lg p-6 mb-8 border border-gray-800">
-    <h2 className="text-2xl font-bold text-blue-500 mb-4">Selected Course</h2>
-    <div className="grid md:grid-cols-2 gap-6">
-      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-white/5">
-        <img
-          src={selectedCourse.image || image}
-          alt={selectedCourse.title}
-          className="h-full w-full object-cover object-center"
-          loading="lazy"
-          onError={(event) => {
-            if (event.currentTarget.src !== image) {
-              event.currentTarget.src = image;
-            }
-          }}
-        />
-      </div>
-      <div>
-        <h3 className="text-xl font-semibold text-white mb-2">{selectedCourse.title}</h3>
-        <p className="text-gray-300 mb-2">{selectedCourse.description}</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Subject:</strong> {selectedCourse.subject}</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Level:</strong> {selectedCourse.level}</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Lessons:</strong> {selectedCourse.lessons}</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Duration:</strong> {selectedCourse.durationHours} hrs</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Rating:</strong> {selectedCourse.rating} ⭐</p>
-        <p className="text-sm text-gray-400 mb-1"><strong>Start Date:</strong> {selectedCourse.startDate}</p>
-        <p className="text-sm text-blue-400 font-bold mt-2">{selectedCourse.price?.display}</p>
-
-        {/* ✅ Enroll Now Button */}
-        <a
-          href={
-            selectedCourse.enrollment?.url ||
-            `https://wa.me/+358409369708?text=Hi,%20I%20want%20to%20enroll%20in%20the%20"${encodeURIComponent(selectedCourse.title)}"%20course.`
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300">
-            📱 WhatsApp
-          </button>
-        </a>
-      </div>
-    </div>
-  </div>
-      )}
-
-      {/* Show full course list only if no selected course */}
-      {!selectedCourse && (
-        <>
-          {loadingCourses && (
-            <p className="mb-4 text-center text-sm text-gray-300">Loading courses...</p>
-          )}
-          {courseError && (
-            <p className="mb-4 rounded-lg bg-yellow-100 px-4 py-3 text-sm text-yellow-800">
-              {courseError}
-            </p>
-          )}
-          <div className="sticky top-20 z-10 bg-gray-950 dark:bg-gray-900/70 backdrop-blur-lg rounded-lg px-4 py-6 mb-8" />
-
-          <CourseGrid courses={visibleCourses} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-          {filteredCourses.length > visibleCount && (
-            <div className="flex justify-center mt-8">
-              <button onClick={handleLoadMore} className="px-6 py-3 text-xl text-white font-semibold bg-gradient-to-r from-cyan-500 to-pink-500 rounded-xl hover:bg-gradient-to-r hover:from-cyan-600 hover:to-pink-600 transition-all duration-300">
-                Load More Courses
-              </button>
+      {/* Courses Search, Filter & Grid Section */}
+      <section className="py-12 flex-grow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          
+          {/* Controls Bar */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#0F172A] border border-slate-800 shadow-lg">
+            <div className="w-full md:max-w-md">
+              <CourseFilterBar selected={selectedCategory} onSelect={setSelectedCategory} />
             </div>
-          )}
-        </>
-      )}
+            <div className="text-xs text-slate-400">
+              Showing <strong className="text-white">{filteredCourses.length}</strong> available programs
+            </div>
+          </div>
 
-      <JournalistFooter />
+          {/* Grid */}
+          <CourseGrid
+            courses={filteredCourses}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
 
 export default CoursesPage;
-
-
-

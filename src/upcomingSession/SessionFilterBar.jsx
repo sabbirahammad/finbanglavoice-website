@@ -1,61 +1,45 @@
-// src/components/UpcomingSessions/SessionFilterBar.jsx
 import React from 'react';
+import { FaSearch, FaVideo } from 'react-icons/fa';
 
 const SessionFilterBar = ({
   selectedMode,
   onModeChange,
-  instructors,
-  selectedInstructor,
-  onInstructorChange,
   searchTerm,
   onSearchChange
 }) => {
-  return (
-    <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-4 rounded-xl shadow-sm">
-      {/* Left side: Mode buttons + Instructor */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Mode:</label>
-          {['All', 'Live Zoom', 'Google Meet'].map((mode) => (
-            <button
-              key={mode}
-              onClick={() => onModeChange(mode)}
-              className={`text-sm px-3 py-1 rounded-full border transition ${
-                selectedMode === mode
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-blue-100'
-              }`}
-            >
-              {mode}
-            </button>
-          ))}
-        </div>
+  const modes = ['All', 'Live Zoom', 'Interactive Webinar'];
 
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Instructor:</label>
-          <select
-            value={selectedInstructor}
-            onChange={(e) => onInstructorChange(e.target.value)}
-            className="text-sm px-3 py-2 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+  return (
+    <div className="mb-8 p-4 rounded-2xl bg-[#0F172A] border border-slate-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* Mode Filter Pills */}
+      <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-1 hidden sm:inline">
+          Filter:
+        </span>
+        {modes.map((mode) => (
+          <button
+            key={mode}
+            onClick={() => onModeChange(mode)}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
+              selectedMode.toLowerCase() === mode.toLowerCase()
+                ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30 border border-cyan-500'
+                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/80'
+            }`}
           >
-            <option value="All">All</option>
-            {instructors.map((inst, idx) => (
-              <option key={idx} value={inst}>
-                {inst}
-              </option>
-            ))}
-          </select>
-        </div>
+            {mode}
+          </button>
+        ))}
       </div>
 
-      {/* Right side: Search Input */}
-      <div className="w-full lg:w-64">
+      {/* Search Input */}
+      <div className="relative w-full md:w-72">
+        <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search sessions..."
-          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-sm"
+          placeholder="Search live sessions..."
+          className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-cyan-500 transition"
         />
       </div>
     </div>
@@ -63,4 +47,3 @@ const SessionFilterBar = ({
 };
 
 export default SessionFilterBar;
-

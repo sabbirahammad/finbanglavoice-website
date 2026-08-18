@@ -1,120 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { Mail, Facebook, Twitter, Linkedin, Youtube } from 'lucide-react';
-import axios from 'axios';
+import React from 'react';
+import { FaEnvelope, FaWhatsapp, FaGlobe, FaMapMarkerAlt } from 'react-icons/fa';
 
 const ContactSection = () => {
-  // const [contactInfo, setContactInfo] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchContactInfo = async () => {
-  //     try {
-  //       const res = await axios.get('http://localhost:3000/contactInfo');
-  //       setContactInfo(res.data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch contact info:', error);
-  //     }
-  //   };
-
-  //   fetchContactInfo();
-  // }, []);
-
-  // if (!contactInfo) {
-  //   return (
-  //     <section className="p-6 text-center text-gray-500">
-  //       Loading contact info...
-  //     </section>
-  //   );
-  // }
-    const contactInfo = {
-    "email": "finbanglavoice@gmail.com",
-    "socialLinks": {
-      "facebook": "https://www.facebook.com/profile.php?id=61560033836918",
-      "twitter": "https://twitter.com/rumana_journalist",
-      "linkedin": "https://www.instagram.com/finbanglavoice2024/",
-      "youtube": "https://www.youtube.com/@FinBanglaVoice"
-    }
-  }
-
-  const { email, socialLinks } = contactInfo;
-  
-
   return (
-    <section className="relative bg-white p-6 sm:p-10 rounded-2xl shadow-md mb-10 overflow-hidden">
-      {/* Top decorative gradient border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 rounded-t-2xl"></div>
+    <section className="rounded-3xl bg-[#0F172A] border border-slate-800 p-8 sm:p-10 shadow-xl">
+      <div className="text-center max-w-2xl mx-auto space-y-3 mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+          Connect with Dr. SM Shafiqul Alam
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          For academic collaborations, Finnish language batch registrations, media interviews, and university admission consultations.
+        </p>
+      </div>
 
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
-        Let’s Connect
-      </h2>
-
-      <div className="flex flex-col lg:flex-row items-stretch gap-8">
-        {/* Left: Contact Info */}
-        <div className="flex-1 space-y-4">
-          <div className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
-            <Mail className="w-5 h-5 text-indigo-600" />
-            <span>{email}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <a
+          href="https://wa.me/358409369708"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-emerald-500/40 text-center space-y-2 group transition"
+        >
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center">
+            <FaWhatsapp className="text-lg" />
           </div>
+          <h4 className="text-xs font-bold text-white group-hover:text-emerald-300">WhatsApp Hotline</h4>
+          <p className="text-xs text-slate-400">+358 40 9369708</p>
+        </a>
 
-          <div className="flex gap-4 mt-4">
-            <a
-              href={socialLinks.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-5 h-5 text-blue-600" />
-            </a>
-            <a
-              href={socialLinks.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-5 h-5 text-sky-500" />
-            </a>
-            <a
-              href={socialLinks.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5 text-blue-700" />
-            </a>
-            <a
-              href={socialLinks.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition"
-              aria-label="YouTube"
-            >
-              <Youtube className="w-5 h-5 text-red-500" />
-            </a>
+        <a
+          href="mailto:finbanglavoice@gmail.com"
+          className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 hover:border-blue-500/40 text-center space-y-2 group transition"
+        >
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 mx-auto flex items-center justify-center">
+            <FaEnvelope className="text-lg" />
           </div>
-        </div>
+          <h4 className="text-xs font-bold text-white group-hover:text-blue-300">Official Email</h4>
+          <p className="text-xs text-slate-400">finbanglavoice@gmail.com</p>
+        </a>
 
-        {/* Right: Newsletter Form */}
-        <div className="flex-1">
-          <form className="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-5 rounded-xl shadow-inner border border-indigo-200">
-            <label className="block mb-2 text-sm font-semibold text-indigo-800">
-              📬 Subscribe for updates
-            </label>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <input
-                type="email"
-                placeholder="you@example.com"
-                className="flex-1 px-4 py-2 rounded-md border border-gray-300 text-sm focus:ring-2 focus:ring-indigo-400 outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-indigo-600 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
+        <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/60 text-center space-y-2">
+          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 mx-auto flex items-center justify-center">
+            <FaMapMarkerAlt className="text-lg" />
+          </div>
+          <h4 className="text-xs font-bold text-white">Location</h4>
+          <p className="text-xs text-slate-400">Helsinki, Finland</p>
         </div>
       </div>
     </section>
@@ -122,5 +51,3 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
-
-

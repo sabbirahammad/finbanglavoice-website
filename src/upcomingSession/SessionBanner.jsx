@@ -1,25 +1,25 @@
-// src/components/UpcomingSessions/SessionBanner.jsx
 import React from 'react';
-import { PlayCircle } from 'lucide-react';
+import { FaVideo, FaBroadcastTower, FaCalendarCheck } from 'react-icons/fa';
 
 const SessionBanner = () => {
   return (
-    <section className="relative w-full bg-gradient-to-br from-[#e0f2fe] via-white to-[#ede9fe] rounded-2xl overflow-hidden shadow-md mb-10">
-      {/* Background Circle Graphics (optional) */}
-      <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-200 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-purple-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+    <section className="relative w-full rounded-3xl bg-gradient-to-r from-blue-950/60 via-slate-900 to-cyan-950/60 border border-blue-500/30 overflow-hidden shadow-2xl p-8 sm:p-12 mb-10">
+      {/* Background Lighting */}
+      <div className="absolute -top-12 -left-12 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="relative z-10 px-6 sm:px-10 lg:px-20 py-16 text-center">
-        <div className="inline-flex items-center gap-2 text-blue-700 text-sm font-medium bg-blue-100 px-4 py-1 rounded-full mb-4 animate-fadeInUp">
-          <PlayCircle className="w-4 h-4" /> Live & Interactive
+      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
+          <FaBroadcastTower className="text-xs" />
+          <span>Real-Time Interactive Zoom Events</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-800 mb-4 leading-tight animate-fadeInUp">
-          Live Sessions
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+          Upcoming <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-sky-300 bg-clip-text text-transparent">Live Masterclasses</span>
         </h1>
 
-        <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto animate-fadeInUp delay-100">
-          Join expert-led, real-time sessions designed to level up your learning. Stay prepared, stay ahead.
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto">
+          Participate in live interactive Zoom workshops on Finnish language pronunciation, admission application walkthroughs, and Q&A sessions with <strong>Dr. SM Shafiqul Alam</strong>.
         </p>
       </div>
     </section>

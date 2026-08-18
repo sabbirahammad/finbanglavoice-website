@@ -1,43 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Quote } from 'lucide-react';
+import React from 'react';
+import { FaQuoteLeft } from 'react-icons/fa';
 
 const BioSection = () => {
-  // const [bio, setBio] = useState(null);
+  const bio = {
+    name: 'Dr. SM Shafiqul Alam',
+    description: `I am a researcher, professor, and development specialist with over 20 years of experience in sustainable development, policy, education, and international cooperation. I believe knowledge and skills empower people and form the foundation for effective solutions toward sustainable development.
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/journalistBio') // or your deployed endpoint
-  //     .then(res => res.json())
-  //     .then(data => setBio(data))
-  //     .catch(err => console.error("Failed to load bio:", err));
-  // }, []);
+Through the FinBangla Voice YouTube platform, I work to promote democracy, human rights, and good governance in Bangladesh. For Bengali-speaking immigrants living in Finland, I offer structured Finnish language courses (Level 0–A2), provide advice and support on education, employment, and family-based permanent residency, and as an ambassador of Finnish education agencies, assist Bangladeshi students in gaining admission to Finnish universities and vocational colleges.`,
+    quote: 'Knowledge, language, and truth empower individuals to build meaningful lives across borders.'
+  };
 
-  // if (!bio) {
-  //   return (
-  //     <div className="text-center text-gray-600 py-10">
-  //       Loading biography...
-  //     </div>
-  //   );
-  // }
-    const bio = {
-    "name": "Dr. SM Shafiqul Alam",
-    "description": "Dr. SM Shafiqul Alam is a fearless voice in the field of investigative journalism, known for uncovering hidden truths and amplifying unheard voices. With more than a decade of experience reporting on human rights and political accountability, she has partnered with leading global outlets to bring attention to stories that others ignore.\n\nHer storytelling is marked by a deep commitment to empathy, justice, and impact — going beyond facts to spotlight lives. Rumana’s work has not only earned international recognition but has also led to tangible policy conversations and reform.",
-    "quote": "Journalism isn’t about speaking — it’s about listening deeply, then echoing what matters."
-  }
   return (
-    <section className="relative bg-gradient-to-br from-white via-gray-50 to-indigo-50 rounded-2xl shadow-md p-6 sm:p-10 mb-10 overflow-hidden">
-      <Quote className="absolute top-5 right-5 w-12 h-12 text-indigo-100 opacity-30" />
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 rounded-t-2xl" />
+    <section className="relative rounded-3xl bg-[#0F172A] border border-slate-800 p-8 sm:p-12 mb-10 overflow-hidden shadow-xl">
+      <div className="space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+          Biography & Mission
+        </h2>
 
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
-        About the Journalist
-      </h2>
+        <p className="text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line text-justify">
+          <strong className="text-white">{bio.name}</strong> — {bio.description}
+        </p>
 
-      <p className="text-gray-700 text-sm sm:text-base leading-relaxed tracking-wide text-justify whitespace-pre-line">
-        <span className="font-semibold text-indigo-600">{bio.name}</span> {bio.description}
-      </p>
-
-      <div className="mt-8 border-l-4 border-indigo-500 pl-4 text-indigo-700 italic text-sm sm:text-base bg-indigo-50/40 py-2 rounded-md shadow-inner">
-        “{bio.quote}”
+        <div className="p-5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-cyan-300 italic text-xs sm:text-sm flex items-start gap-3">
+          <FaQuoteLeft className="text-blue-400 text-base shrink-0 mt-0.5" />
+          <span>“{bio.quote}”</span>
+        </div>
       </div>
     </section>
   );
