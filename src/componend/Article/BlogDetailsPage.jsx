@@ -17,7 +17,10 @@ import {
   FaEdit,
   FaTrash,
   FaQuoteLeft,
-  FaTag
+  FaTag,
+  FaFont,
+  FaSearchPlus,
+  FaSearchMinus
 } from 'react-icons/fa';
 import Footer from '../Home/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -36,15 +39,15 @@ const renderFormattedBody = (content) => {
     // Headings
     if (trimmed.startsWith('### ')) {
       return (
-        <h3 key={idx} className="text-lg sm:text-xl font-bold text-white mt-6 mb-3 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+        <h3 key={idx} className="text-xl sm:text-2xl font-bold text-white mt-8 mb-3 flex items-center gap-2.5 tracking-tight font-sans">
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shrink-0"></span>
           <span>{trimmed.replace('### ', '')}</span>
         </h3>
       );
     }
     if (trimmed.startsWith('## ')) {
       return (
-        <h2 key={idx} className="text-xl sm:text-2xl font-bold text-white mt-8 mb-4 border-b border-slate-800 pb-2">
+        <h2 key={idx} className="text-2xl sm:text-3xl font-extrabold text-white mt-10 mb-4 border-b border-slate-800 pb-3 tracking-tight font-sans">
           {trimmed.replace('## ', '')}
         </h2>
       );
@@ -54,7 +57,7 @@ const renderFormattedBody = (content) => {
     if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       const itemText = trimmed.substring(2);
       return (
-        <li key={idx} className="ml-5 list-disc text-slate-300 my-1 leading-relaxed">
+        <li key={idx} className="ml-6 list-disc text-slate-200 my-1.5 leading-relaxed marker:text-cyan-400">
           {renderInlineFormatting(itemText)}
         </li>
       );
@@ -63,7 +66,7 @@ const renderFormattedBody = (content) => {
     // Numbered points
     if (/^\d+\.\s/.test(trimmed)) {
       return (
-        <p key={idx} className="font-semibold text-cyan-300 mt-4 mb-1">
+        <p key={idx} className="font-semibold text-cyan-300 mt-5 mb-1.5 text-base sm:text-lg">
           {trimmed}
         </p>
       );
@@ -76,7 +79,7 @@ const renderFormattedBody = (content) => {
 
     // Standard paragraph
     return (
-      <p key={idx} className="text-slate-300 leading-relaxed my-2 text-sm sm:text-base">
+      <p key={idx} className="text-slate-200 leading-[1.85] my-3.5">
         {renderInlineFormatting(trimmed)}
       </p>
     );
@@ -93,13 +96,13 @@ const renderInlineFormatting = (text) => {
     }
     if (part.startsWith('==') && part.endsWith('==')) {
       return (
-        <mark key={partIdx} className="bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-500/30">
+        <mark key={partIdx} className="bg-cyan-500/20 text-cyan-200 px-1.5 py-0.5 rounded border border-cyan-500/40 font-medium">
           {part.slice(2, -2)}
         </mark>
       );
     }
     if (part.startsWith('*') && part.endsWith('*')) {
-      return <em key={partIdx} className="italic text-slate-200">{part.slice(1, -1)}</em>;
+      return <em key={partIdx} className="italic text-slate-100">{part.slice(1, -1)}</em>;
     }
     return part;
   });
@@ -112,6 +115,8 @@ const BlogDetailsPage = () => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [fontFamily, setFontFamily] = useState('serif'); // 'serif' (Lora) or 'sans' (Plus Jakarta / Inter)
+  const [fontSize, setFontSize] = useState('base'); // 'sm', 'base', 'lg'
 
   // Comment State
   const [comments, setComments] = useState([]);
@@ -147,7 +152,6 @@ const BlogDetailsPage = () => {
   };
 
   const loadComments = async () => {
-    // 1. Try local storage cache first
     const localKey = `comments_blog_${id}`;
     const savedLocal = JSON.parse(localStorage.getItem(localKey)) || [];
 
@@ -165,7 +169,6 @@ const BlogDetailsPage = () => {
     if (savedLocal.length > 0) {
       setComments(savedLocal);
     } else {
-      // Default initial welcome comment
       const initialComment = [
         {
           id: 'welcome-1',
@@ -200,7 +203,6 @@ const BlogDetailsPage = () => {
       replies: []
     };
 
-    // Try posting to backend
     try {
       await axios.post(
         `https://finbangla-voice-backend-production.up.railway.app/api/blogs/${id}/comments`,
@@ -230,9 +232,7 @@ const BlogDetailsPage = () => {
         `https://finbangla-voice-backend-production.up.railway.app/api/comments/${commentId}/reply`,
         replyObj
       );
-    } catch (err) {
-      // fallback local
-    }
+    } catch (err) {}
 
     const updated = comments.map((cmt) => {
       if (cmt.id === commentId) {
@@ -310,6 +310,10 @@ const BlogDetailsPage = () => {
   const shareTitle = encodeURIComponent(article.title);
   const shareUrl = encodeURIComponent(window.location.href);
 
+  // Dynamic font size and family classes
+  const fontClass = fontFamily === 'serif' ? 'font-serif-reading' : 'font-sans-editorial';
+  const sizeClass = fontSize === 'lg' ? 'text-lg sm:text-xl' : fontSize === 'sm' ? 'text-sm sm:text-base' : 'text-base sm:text-lg';
+
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
       
@@ -317,43 +321,87 @@ const BlogDetailsPage = () => {
       <main className="py-12 sm:py-16 flex-grow">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
-          {/* Top Bar with Back Link & Social Share */}
+          {/* Top Bar with Back Link, Font Controls & Social Share */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
             <Link
               to="/articles"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition group"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition group"
             >
-              <FaArrowLeft className="text-[10px] group-hover:-translate-x-1 transition duration-200" />
+              <FaArrowLeft className="text-xs group-hover:-translate-x-1 transition duration-200" />
               <span>Back to All Articles</span>
             </Link>
 
-            {/* Social Share Buttons */}
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-slate-400 hidden sm:inline mr-1">Share:</span>
+            {/* Controls Toolbar (Font Style & Size + Share) */}
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              
+              {/* Font Family Toggle */}
+              <div className="inline-flex items-center rounded-lg bg-slate-900 border border-slate-800 p-0.5">
+                <button
+                  onClick={() => setFontFamily('serif')}
+                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition cursor-pointer ${
+                    fontFamily === 'serif' ? 'bg-cyan-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Editorial Serif Font (Lora)"
+                >
+                  Serif
+                </button>
+                <button
+                  onClick={() => setFontFamily('sans')}
+                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition cursor-pointer ${
+                    fontFamily === 'sans' ? 'bg-cyan-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Modern Sans Font"
+                >
+                  Sans
+                </button>
+              </div>
+
+              {/* Font Size Adjuster */}
+              <div className="inline-flex items-center rounded-lg bg-slate-900 border border-slate-800 p-0.5">
+                <button
+                  onClick={() => setFontSize(fontSize === 'lg' ? 'base' : fontSize === 'base' ? 'sm' : 'sm')}
+                  className="px-2 py-1 text-slate-400 hover:text-white cursor-pointer"
+                  title="Decrease Font Size"
+                >
+                  <FaSearchMinus className="text-[10px]" />
+                </button>
+                <span className="px-1 text-[11px] text-slate-300 uppercase font-mono">
+                  {fontSize === 'lg' ? 'L' : fontSize === 'sm' ? 'S' : 'M'}
+                </span>
+                <button
+                  onClick={() => setFontSize(fontSize === 'sm' ? 'base' : fontSize === 'base' ? 'lg' : 'lg')}
+                  className="px-2 py-1 text-slate-400 hover:text-white cursor-pointer"
+                  title="Increase Font Size"
+                >
+                  <FaSearchPlus className="text-[10px]" />
+                </button>
+              </div>
+
+              {/* Social Share */}
               <a
                 href={`https://wa.me/?text=${shareTitle}%20${shareUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
+                className="p-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
                 title="Share on WhatsApp"
               >
-                <FaWhatsapp />
+                <FaWhatsapp className="text-xs" />
               </a>
               <a
                 href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-blue-500/15 border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white transition"
+                className="p-1.5 rounded-lg bg-blue-500/15 border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white transition"
                 title="Share on Facebook"
               >
-                <FaFacebook />
+                <FaFacebook className="text-xs" />
               </a>
               <button
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs transition cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs transition cursor-pointer"
               >
-                {copied ? <FaCheck className="text-emerald-400 text-xs" /> : <FaLink className="text-xs" />}
-                <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
+                {copied ? <FaCheck className="text-emerald-400 text-[10px]" /> : <FaLink className="text-[10px]" />}
+                <span>{copied ? 'Copied' : 'Link'}</span>
               </button>
             </div>
           </div>
@@ -365,7 +413,7 @@ const BlogDetailsPage = () => {
               <span>{article.category || 'Education & Policy'}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight sm:leading-snug">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.25] tracking-tight font-sans">
               {article.title}
             </h1>
 
@@ -411,8 +459,15 @@ const BlogDetailsPage = () => {
             />
           </div>
 
-          {/* Article Full Body */}
-          <article className="p-6 sm:p-10 rounded-3xl bg-[#0F172A] border border-slate-800 text-slate-200 text-sm sm:text-base leading-relaxed space-y-4 shadow-xl">
+          {/* Lead Summary Callout */}
+          {article.excerpt && (
+            <div className="p-5 sm:p-6 rounded-2xl bg-cyan-950/20 border-l-4 border-cyan-400 border-r border-t border-b border-cyan-900/30 text-cyan-100 text-base sm:text-lg leading-relaxed italic shadow-inner">
+              <p>{article.excerpt.replace(/[*=#]/g, '')}</p>
+            </div>
+          )}
+
+          {/* Article Full Body with Enhanced Typography */}
+          <article className={`p-6 sm:p-10 rounded-3xl bg-[#0F172A] border border-slate-800 shadow-xl ${fontClass} ${sizeClass}`}>
             {renderFormattedBody(article.content || article.excerpt)}
           </article>
 
@@ -424,7 +479,7 @@ const BlogDetailsPage = () => {
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-slate-700 shrink-0 shadow-lg"
             />
             <div className="space-y-2 text-center sm:text-left">
-              <h4 className="text-base sm:text-lg font-bold text-white">About the Author: Dr. SM Shafiqul Alam</h4>
+              <h4 className="text-base sm:text-lg font-bold text-white font-sans">About the Author: Dr. SM Shafiqul Alam</h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Researcher, Professor, and Ambassador of Finnish Education agencies with over 20 years of experience in higher education, Finnish language instruction, and international policy research.
               </p>
@@ -452,7 +507,7 @@ const BlogDetailsPage = () => {
                   <FaComments className="text-lg" />
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">
+                  <h3 className="text-lg sm:text-xl font-bold text-white font-sans">
                     Discussion & Comments
                   </h3>
                   <p className="text-xs text-slate-400">
