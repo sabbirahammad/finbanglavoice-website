@@ -1,6 +1,7 @@
+import { COURSE_PRICE, BEGINNER_ENROLLMENT_URL } from '../../config/courses';
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaArrowLeft, FaWhatsapp, FaGraduationCap, FaCheckCircle, FaGlobe, FaCertificate, FaClock, FaCalendarAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaClipboardList, FaGraduationCap, FaCheckCircle, FaGlobe, FaCertificate, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import Footer from './Footer';
 import image from '../../assets/t.webp';
 
@@ -12,7 +13,7 @@ const CourseDetiles = () => {
     id: id || '2',
     image: image,
     badge: 'Flagship Program',
-    price: { amount: 150, currency: 'EUR', display: '150 € Total (50 € / month)' },
+    price: COURSE_PRICE,
     rating: 4.9,
     lessons: 24,
     duration: '3 Months (36 Hours Live)',
@@ -39,9 +40,6 @@ const CourseDetiles = () => {
     },
     teacher: 'Dr. SM Shafiqul Alam (PhD, Professor & Senior Policy Researcher)'
   };
-
-  const whatsappMessage = `Hi Dr. SM Shafiqul Alam, I would like to enroll in the "${course.title[language]}" course.`;
-  const whatsappUrl = `https://wa.me/358409369708?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
@@ -140,13 +138,13 @@ const CourseDetiles = () => {
               </div>
 
               <a
-                href={whatsappUrl}
+                href={BEGINNER_ENROLLMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm text-center transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 active:scale-95"
               >
-                <FaWhatsapp className="text-base" />
-                <span>Enroll Directly on WhatsApp</span>
+                <FaClipboardList className="text-base" />
+                <span>Enroll via Google Form</span>
               </a>
             </div>
 

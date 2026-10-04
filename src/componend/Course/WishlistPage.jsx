@@ -1,3 +1,4 @@
+import { COURSE_PRICE } from '../../config/courses';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaArrowLeft, FaGraduationCap } from 'react-icons/fa';
@@ -12,7 +13,7 @@ const allCourseCatalog = [
     subject: "Language",
     level: "Beginner (Level 0 – A1)",
     description: "Learn essential Finnish pronunciation, everyday greetings, shopping, numbers, basic grammar, and conversation skills tailored for Bengali speakers.",
-    price: { amount: 50, currency: "EUR", display: "50 € / Month" },
+    price: COURSE_PRICE,
     lessons: 24,
     durationHours: 36,
     rating: 4.9,
@@ -27,7 +28,7 @@ const allCourseCatalog = [
     subject: "Language",
     level: "Intermediate (Level A1 – A2)",
     description: "Designed for job seekers and residents. Master workplace conversations, official authority communication (Kela, TE-palvelut), and YKI exam fundamentals.",
-    price: { amount: 60, currency: "EUR", display: "60 € / Month" },
+    price: COURSE_PRICE,
     lessons: 24,
     durationHours: 36,
     rating: 4.8,
@@ -42,7 +43,7 @@ const allCourseCatalog = [
     subject: "Education",
     level: "All Levels",
     description: "Complete walkthrough of Studyinfo.fi admissions, university selection, scholarship acquisition, SOP reviews, and student residence permit procedures.",
-    price: { amount: 80, currency: "EUR", display: "80 € Total" },
+    price: COURSE_PRICE,
     lessons: 8,
     durationHours: 16,
     rating: 5.0,

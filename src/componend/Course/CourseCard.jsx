@@ -1,3 +1,4 @@
+import { COURSE_PRICE, BEGINNER_ENROLLMENT_URL, isBeginnerCourse } from '../../config/courses';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -5,6 +6,7 @@ import {
   FaClock,
   FaCalendarAlt,
   FaWhatsapp,
+  FaClipboardList,
   FaArrowRight,
   FaHeart,
   FaRegHeart,
@@ -36,7 +38,8 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
     setIsSaved(!isSaved);
   };
 
-  const whatsappEnrollUrl = `https://wa.me/358409369708?text=${encodeURIComponent(
+  const beginner = isBeginnerCourse(course);
+  const enrollUrl = beginner ? BEGINNER_ENROLLMENT_URL : `https://wa.me/358409369708?text=${encodeURIComponent(
     `Hi Dr. SM Shafiqul Alam, I would like to enroll in the course: "${course.title || course.course_name}".`
   )}`;
 
@@ -113,7 +116,7 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
               <FaEuroSign className="text-emerald-400" /> Course Fee:
             </span>
             <span className="font-bold text-emerald-400 text-sm">
-              {course.price?.display || (course.price?.amount ? `€${course.price.amount}` : '50 €/mo')}
+              {COURSE_PRICE.display}
             </span>
           </div>
         </div>
@@ -129,12 +132,12 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
         {/* Actions Grid */}
         <div className="grid grid-cols-2 gap-3 pt-3 mt-auto border-t border-slate-800/80">
           <a
-            href={whatsappEnrollUrl}
+            href={enrollUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-95"
           >
-            <FaWhatsapp className="text-sm" />
+            {beginner ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
             <span>Enroll</span>
           </a>
 

@@ -1,3 +1,4 @@
+import { COURSE_PRICE, BEGINNER_ENROLLMENT_URL } from '../../config/courses';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,6 +8,7 @@ import {
   FaLanguage,
   FaArrowRight,
   FaWhatsapp,
+  FaClipboardList,
   FaStar,
   FaCheckCircle,
   FaVideo
@@ -222,20 +224,20 @@ const HeroSection = () => {
                 </div>
                 <div className="flex items-center justify-between py-1.5">
                   <span className="text-slate-400">Course Fee</span>
-                  <span className="font-bold text-emerald-400 text-base">50 € / Month (150 € Total)</span>
+                  <span className="font-bold text-emerald-400 text-base">{COURSE_PRICE.display}</span>
                 </div>
               </div>
 
               {/* Card Action Buttons */}
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <a
-                  href="https://wa.me/358409369708?text=Hi%2C%20I%20want%20to%20enroll%20in%20the%20Finnish%20Language%20Course%20in%20Bangla."
+                  href={BEGINNER_ENROLLMENT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm text-center transition-all shadow-md hover:shadow-emerald-600/30 flex items-center justify-center gap-1.5"
                 >
-                  <FaWhatsapp className="text-base" />
-                  <span>Enroll on WhatsApp</span>
+                  <FaClipboardList className="text-base" />
+                  <span>Enroll via Google Form</span>
                 </a>
                 <Link
                   to="/courses"

@@ -1,3 +1,4 @@
+import { COURSE_PRICE, BEGINNER_ENROLLMENT_URL, isBeginnerCourse } from '../../config/courses';
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -5,6 +6,7 @@ import {
   FaClock,
   FaCalendarAlt,
   FaWhatsapp,
+  FaClipboardList,
   FaArrowLeft,
   FaCheckCircle,
   FaBookOpen,
@@ -28,7 +30,7 @@ const defaultCoursesData = {
     tagline: 'Master fundamental Finnish pronunciation, daily conversation, and grammar with clear Bengali explanations.',
     duration: '3 Months (24 Live Zoom Classes)',
     schedule: 'Friday & Saturday • 08:00 PM (Helsinki Time)',
-    fee: '50 € / Month (150 € Total)',
+    fee: COURSE_PRICE.display,
     instructor: {
       name: 'Dr. SM Shafiqul Alam',
       title: 'Professor, Senior Researcher & Finnish Education Ambassador',
@@ -89,7 +91,7 @@ const defaultCoursesData = {
     tagline: 'Elevate your Finnish for employment interviews, public authority interactions, and YKI test foundation.',
     duration: '3 Months (24 Live Zoom Classes)',
     schedule: 'Monday & Wednesday • 08:30 PM (Helsinki Time)',
-    fee: '60 € / Month (180 € Total)',
+    fee: COURSE_PRICE.display,
     instructor: {
       name: 'Dr. SM Shafiqul Alam',
       title: 'Professor, Senior Researcher & Finnish Education Ambassador',
@@ -145,7 +147,7 @@ const defaultCoursesData = {
     tagline: 'Your complete roadmap to studying in Finland with scholarship acquisition and residence permit guidance.',
     duration: '4 Weeks (8 Comprehensive Masterclasses + 1-on-1 Consultation)',
     schedule: 'Sunday Masterclasses • 07:30 PM (Helsinki Time)',
-    fee: '80 € Total Fee',
+    fee: COURSE_PRICE.display,
     instructor: {
       name: 'Dr. SM Shafiqul Alam',
       title: 'Professor, Senior Researcher & Finnish Education Ambassador',
@@ -222,7 +224,7 @@ const CourseDetailsPage = () => {
             tagline: c.course_details?.session_overview || 'Comprehensive course designed for Bangladeshi learners.',
             duration: c.course_details?.duration || '3 Months',
             schedule: c.course_details?.schedule || 'Live Weekend Zoom',
-            fee: c.course_details?.rate || c.course_details?.total_fee || '50 € / Month',
+            fee: COURSE_PRICE.display,
             instructor: {
               name: c.instructor?.name || 'Dr. SM Shafiqul Alam',
               title: c.instructor?.bio || 'Professor, Senior Researcher & Finnish Education Ambassador',
@@ -245,7 +247,8 @@ const CourseDetailsPage = () => {
     setOpenModuleIndex(openModuleIndex === idx ? null : idx);
   };
 
-  const whatsappEnrollUrl = `https://wa.me/358409369708?text=${encodeURIComponent(
+  const beginner = isBeginnerCourse(course);
+  const enrollUrl = beginner ? BEGINNER_ENROLLMENT_URL : `https://wa.me/358409369708?text=${encodeURIComponent(
     `Hello Dr. SM Shafiqul Alam, I would like to enroll in "${course.title}". Please send me batch details and enrollment steps.`
   )}`;
 
@@ -427,13 +430,13 @@ const CourseDetailsPage = () => {
                 {/* Direct Action Buttons */}
                 <div className="space-y-3 pt-2">
                   <a
-                    href={whatsappEnrollUrl}
+                    href={enrollUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm text-center transition-all shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                   >
-                    <FaWhatsapp className="text-lg" />
-                    <span>Enroll on WhatsApp</span>
+                    {beginner ? <FaClipboardList className="text-lg" /> : <FaWhatsapp className="text-lg" />}
+                    <span>{beginner ? 'Enroll via Google Form' : 'Enroll on WhatsApp'}</span>
                   </a>
 
                   <Link

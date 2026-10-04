@@ -1,3 +1,4 @@
+import { COURSE_PRICE, BEGINNER_ENROLLMENT_URL, isBeginnerCourse } from '../../config/courses';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -5,6 +6,7 @@ import {
   FaCalendarAlt,
   FaClock,
   FaWhatsapp,
+  FaClipboardList,
   FaArrowRight,
   FaCheckCircle,
   FaEuroSign
@@ -25,8 +27,8 @@ const fallbackCourses = [
       duration: '3 Months',
       schedule: 'Weekend Live Zoom Classes',
       session_mode: 'Live Online (Zoom)',
-      rate: '50 € / Month',
-      total_fee: '150 € Total',
+      rate: COURSE_PRICE.display,
+      total_fee: COURSE_PRICE.display,
       material: 'Comprehensive PDF lecture notes, vocabulary drills, and audio practice packs',
       session_overview:
         'Designed specifically for beginners moving to or living in Finland. Learn pronunciation, core grammar rules, daily conversations, shopping, numbers, and basic sentence structuring with Bengali explanations.',
@@ -58,8 +60,8 @@ const fallbackCourses = [
       duration: '3 Months',
       schedule: 'Evening Live Zoom Classes',
       session_mode: 'Live Online (Zoom)',
-      rate: '60 € / Month',
-      total_fee: '180 € Total',
+      rate: COURSE_PRICE.display,
+      total_fee: COURSE_PRICE.display,
       material: 'Advanced PDF modules, workplace dialogue sheets, and YKI test primer',
       session_overview:
         'Level up your Finnish language skills for job interviews, official communication (Kela, TE-palvelut, Poliisi), doctor visits, public services, and building foundation for YKI language exams.',
@@ -91,8 +93,8 @@ const fallbackCourses = [
       duration: '4 Weeks',
       schedule: 'Weekly Interactive Workshops',
       session_mode: 'Online Masterclass + 1-on-1',
-      rate: '80 € Total Fee',
-      total_fee: '80 € Total',
+      rate: COURSE_PRICE.display,
+      total_fee: COURSE_PRICE.display,
       material: 'University application checklist, SOP templates, and visa guide',
       session_overview:
         'Comprehensive roadmap to studying in Finland. Expert guidance on selecting universities/AMK, vocational college (Ammattiopisto) routes, scholarship essays, and residence permit requirements.',
@@ -183,7 +185,8 @@ const FeaturedCourses = () => {
               'Recorded classes for revision',
             ];
 
-            const enrollUrl =
+            const beginner = isBeginnerCourse(course);
+            const enrollUrl = beginner ? BEGINNER_ENROLLMENT_URL :
               enrollment.url ||
               `https://wa.me/${String(contact.whatsapp || '+358409369708').replace(
                 /\D/g,
@@ -253,7 +256,7 @@ const FeaturedCourses = () => {
                         <FaEuroSign className="text-emerald-400" /> Fee:
                       </span>
                       <span className="font-bold text-emerald-400 text-sm">
-                        {details.total_fee || details.rate || '50 €/month'}
+                        {COURSE_PRICE.display}
                       </span>
                     </div>
                   </div>
@@ -282,8 +285,8 @@ const FeaturedCourses = () => {
                       rel="noopener noreferrer"
                       className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-all shadow-md flex items-center justify-center gap-1.5"
                     >
-                      <FaWhatsapp className="text-sm" />
-                      <span>{enrollment.button_text || 'Enroll Now'}</span>
+                      {beginner ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
+                      <span>{beginner ? 'Enroll via Google Form' : enrollment.button_text || 'Enroll Now'}</span>
                     </a>
                     <Link
                       to="/courses"
