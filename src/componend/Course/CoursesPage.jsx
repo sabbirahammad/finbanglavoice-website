@@ -11,10 +11,42 @@ import fallbackImage from '../../assets/t.webp';
 
 const defaultCourses = [
   {
-    id: "course-finnish-a1",
-    title: "Practical Finnish Language Course in Bangla (Level 0 – A1)",
+    id: "12",
+    title: "দৈনন্দিন ফিনিশ কথোপকথন অনুশীলন / Everyday Finnish Conversation Practice course",
     subject: "Language",
-    level: "Beginner (A0–A1)",
+    level: "Speaking Practice (All Levels)",
+    description: "৮টি অনলাইন সেশনে বাস্তব জীবন, কেনাকাটা, যাতায়াত, স্বাস্থ্য, বাসস্থান, কাজ ও পড়াশোনা নিয়ে নিয়মিত কথা বলার অভ্যাস ও আত্মবিশ্বাস বাড়ানোর বিশেষ কোর্স।",
+    price: COURSE_PRICE,
+    lessons: 8,
+    durationHours: 16,
+    rating: 4.9,
+    enrolled: 640,
+    badge: "Speaking Drills",
+    startDate: "New Batch Starting Soon",
+    image: fallbackImage,
+    enrollUrl: "https://docs.google.com/forms/d/e/1FAIpQLScSClOiUyLEU7Zw4GDEIJBDdaI8ddMorlv1E_dH4Qm_XD4EYQ/viewform?usp=publish-editor",
+  },
+  {
+    id: "10",
+    title: "YKI পরীক্ষা প্রস্তুতি কোর্স",
+    subject: "Language",
+    level: "Intermediate (B1–B2 Prep)",
+    description: "YKI পরীক্ষার চারটি অংশ—Reading, Writing, Speaking ও Listening—এর লক্ষ্যভিত্তিক প্রস্তুতি, মডেল টেস্ট ও শিক্ষক কর্তৃক ব্যক্তিগত ফিডব্যাক।",
+    price: COURSE_PRICE,
+    lessons: 16,
+    durationHours: 24,
+    rating: 5.0,
+    enrolled: 820,
+    badge: "YKI Test Prep",
+    startDate: "Next Intake Batch",
+    image: fallbackImage,
+    enrollUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdrclrGbU5eXeChTkKD-wpjP2dbQwHjv6rt5idoP7_SjDamjg/viewform?usp=publish-editor",
+  },
+  {
+    id: "course-finnish-a1",
+    title: "বাংলায় ফিনিশ ভাষা শিক্ষা (A0–A2) / Practical Finnish Language Course",
+    subject: "Language",
+    level: "Beginner (A0–A1/A2)",
     description: "Learn essential Finnish pronunciation, everyday greetings, shopping, numbers, basic grammar, and conversation skills tailored for Bengali speakers.",
     price: COURSE_PRICE,
     lessons: 24,
@@ -24,6 +56,7 @@ const defaultCourses = [
     badge: "Most Popular",
     startDate: "New Batch Starting Soon",
     image: fallbackImage,
+    enrollUrl: "https://docs.google.com/forms/d/e/1FAIpQLScngT1MTcKR8B5106ZJ6a4Fe_D7XuGMfbWOHJPD2-K--MsaQg/viewform?usp=header",
   },
   {
     id: "course-finnish-a2",
@@ -87,6 +120,8 @@ const CoursesPage = () => {
               badge: c.badge || 'Live Batch',
               startDate: c.course_details?.schedule || 'Ongoing Registration',
               image: c.instructor?.photo_url || fallbackImage,
+              enrollment: c.enrollment,
+              enrollUrl: c.enrollment?.url,
             }));
             setCourses(mappedCourses);
           }
@@ -109,12 +144,24 @@ const CoursesPage = () => {
 
     const matchesCategory =
       selectedCategory === 'all' ||
-      (selectedCategory === 'language' && (course.subject.toLowerCase().includes('lang') || course.title.toLowerCase().includes('finnish'))) ||
-      (selectedCategory === 'education' && (course.subject.toLowerCase().includes('edu') || course.title.toLowerCase().includes('education') || course.title.toLowerCase().includes('admission'))) ||
-      (selectedCategory === 'masterclass' && (course.title.toLowerCase().includes('masterclass') || course.title.toLowerCase().includes('workshop')));
+      (selectedCategory === 'language' &&
+        (course.subject.toLowerCase().includes('lang') ||
+          course.title.toLowerCase().includes('finnish') ||
+          course.title.toLowerCase().includes('ফিনিশ') ||
+          course.title.toLowerCase().includes('কথোপকথন') ||
+          course.title.toLowerCase().includes('yki'))) ||
+      (selectedCategory === 'education' &&
+        (course.subject.toLowerCase().includes('edu') ||
+          course.title.toLowerCase().includes('education') ||
+          course.title.toLowerCase().includes('admission'))) ||
+      (selectedCategory === 'masterclass' &&
+        (course.title.toLowerCase().includes('masterclass') ||
+          course.title.toLowerCase().includes('workshop') ||
+          course.title.toLowerCase().includes('yki')));
 
     return matchesSearch && matchesCategory;
   });
+
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">

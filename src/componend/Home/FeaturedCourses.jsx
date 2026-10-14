@@ -16,15 +16,81 @@ import fallbackImage from '../../assets/t.webp';
 
 const fallbackCourses = [
   {
-    id: 'course-finnish-a1',
-    course_name: 'Practical Finnish Language Course in Bangla (Level 0 – A1)',
+    id: '12',
+    course_name: 'দৈনন্দিন ফিনিশ কথোপকথন অনুশীলন / Everyday Finnish Conversation Practice course',
+    instructor: {
+      name: 'Dr. SM Shafiqul Alam',
+      photo_url: fallbackImage,
+      bio: 'Professor & Senior Researcher with 16+ years of living and mentoring in Finland.',
+    },
+    course_details: {
+      duration: '২ মাস',
+      schedule: 'মোট ক্লাস: ৮টি, প্রতি সপ্তাহে ১টি',
+      session_mode: 'Live Online (Zoom / Meet)',
+      rate: 'মাসে ৩০ ইউরো',
+      total_fee: '৬০ ইউরো',
+      material: 'বিষয়ভিত্তিক লেকচার স্লাইড, কথোপকথনের নমুনা, অডিও ও স্পিকিং টাস্ক',
+      session_overview:
+        '৮টি অনলাইন সেশনে বাস্তব জীবন, কেনাকাটা, যাতায়াত, স্বাস্থ্য, বাসস্থান, কাজ ও পড়াশোনা নিয়ে নিয়মিত কথা বলার অভ্যাস ও আত্মবিশ্বাস বাড়ানোর বিশেষ কোর্স।',
+      highlights: [
+        'জোড়ায় ও ছোট দলে বাস্তবভিত্তিক কথোপকথন',
+        'বাস্তব পরিস্থিতি অনুযায়ী বিভিন্ন ভূমিকায় কথা বলা',
+        'প্রয়োজনীয় শব্দ, প্রশ্ন ও বাক্যাংশ প্রয়োগ',
+        'সাপ্তাহিক স্পিকিং টাস্ক ও শিক্ষকের ফিডব্যাক',
+      ],
+    },
+    contact: {
+      whatsapp: '+358409369708',
+      email: 'finbanglavoice@gmail.com',
+    },
+    enrollment: {
+      button_text: 'Enroll via Google Form',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScSClOiUyLEU7Zw4GDEIJBDdaI8ddMorlv1E_dH4Qm_XD4EYQ/viewform?usp=publish-editor',
+    },
+  },
+  {
+    id: '10',
+    course_name: 'YKI পরীক্ষা প্রস্তুতি কোর্স',
     instructor: {
       name: 'Dr. SM Shafiqul Alam',
       photo_url: fallbackImage,
       bio: 'Professor, Senior Researcher & Finnish Education Ambassador',
     },
     course_details: {
-      duration: '3 Months',
+      duration: '২ মাস',
+      schedule: '১৬টি অনলাইন ক্লাস, প্রতি সপ্তাহে ২টি',
+      session_mode: 'Live Online (Zoom)',
+      rate: COURSE_PRICE.display,
+      total_fee: COURSE_PRICE.display,
+      material: 'চারটি অংশের মডেল প্রশ্ন, ব্যাকরণ নোটস ও ড্রিল মেটেরিয়ালস',
+      session_overview:
+        'এই কোর্সে YKI পরীক্ষার চারটি অংশ—Reading, Writing, Speaking ও Listening—এর লক্ষ্যভিত্তিক অনুশীলন করানো হয়। পাশাপাশি এসব কাজে প্রয়োজনীয় ব্যাকরণের নিয়ম সহজভাবে ব্যাখ্যা করা হয়।',
+      highlights: [
+        'YKI কাঠামোর ৪টি অংশের সমন্বিত প্রস্তুতি',
+        'Speaking ও Writing-এর উত্তরে ব্যক্তিগত ফিডব্যাক',
+        'মডেল প্রশ্ন ও সময় ব্যবস্থাপনা কৌশল',
+        'প্রয়োজনীয় ব্যাকরণ, শব্দভাণ্ডার ও বাক্যগঠন',
+      ],
+    },
+    contact: {
+      whatsapp: '+358409369708',
+      email: 'finbanglavoice@gmail.com',
+    },
+    enrollment: {
+      button_text: 'Enroll via Google Form',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLSdrclrGbU5eXeChTkKD-wpjP2dbQwHjv6rt5idoP7_SjDamjg/viewform?usp=publish-editor',
+    },
+  },
+  {
+    id: 'course-finnish-a1',
+    course_name: 'বাংলায় ফিনিশ ভাষা শিক্ষা (A0–A2) / Practical Finnish Language Course',
+    instructor: {
+      name: 'Dr. SM Shafiqul Alam',
+      photo_url: fallbackImage,
+      bio: 'Professor, Senior Researcher & Finnish Education Ambassador',
+    },
+    course_details: {
+      duration: '৩ মাস',
       schedule: 'Weekend Live Zoom Classes',
       session_mode: 'Live Online (Zoom)',
       rate: COURSE_PRICE.display,
@@ -44,77 +110,12 @@ const fallbackCourses = [
       email: 'finbanglavoice@gmail.com',
     },
     enrollment: {
-      button_text: 'Enroll on WhatsApp',
-      url: '',
-    },
-  },
-  {
-    id: 'course-finnish-a2',
-    course_name: 'Intermediate Finnish & Workplace Spoken (Level A1 – A2)',
-    instructor: {
-      name: 'Dr. SM Shafiqul Alam',
-      photo_url: fallbackImage,
-      bio: 'Professor, Senior Researcher & Finnish Education Ambassador',
-    },
-    course_details: {
-      duration: '3 Months',
-      schedule: 'Evening Live Zoom Classes',
-      session_mode: 'Live Online (Zoom)',
-      rate: COURSE_PRICE.display,
-      total_fee: COURSE_PRICE.display,
-      material: 'Advanced PDF modules, workplace dialogue sheets, and YKI test primer',
-      session_overview:
-        'Level up your Finnish language skills for job interviews, official communication (Kela, TE-palvelut, Poliisi), doctor visits, public services, and building foundation for YKI language exams.',
-      highlights: [
-        'Workplace & professional Finnish phrases',
-        'Interactions with Finnish official authorities',
-        'Complex sentences, cases & noun declensions',
-        'Foundational prep for national YKI test',
-      ],
-    },
-    contact: {
-      whatsapp: '+358409369708',
-      email: 'finbanglavoice@gmail.com',
-    },
-    enrollment: {
-      button_text: 'Enroll on WhatsApp',
-      url: '',
-    },
-  },
-  {
-    id: 'course-study-finland',
-    course_name: 'Higher Education in Finland & Admission Masterclass',
-    instructor: {
-      name: 'Dr. SM Shafiqul Alam',
-      photo_url: fallbackImage,
-      bio: 'Professor, Senior Researcher & Finnish Education Ambassador',
-    },
-    course_details: {
-      duration: '4 Weeks',
-      schedule: 'Weekly Interactive Workshops',
-      session_mode: 'Online Masterclass + 1-on-1',
-      rate: COURSE_PRICE.display,
-      total_fee: COURSE_PRICE.display,
-      material: 'University application checklist, SOP templates, and visa guide',
-      session_overview:
-        'Comprehensive roadmap to studying in Finland. Expert guidance on selecting universities/AMK, vocational college (Ammattiopisto) routes, scholarship essays, and residence permit requirements.',
-      highlights: [
-        'Studyinfo.fi portal application walkthrough',
-        'SOP & Motivation letter personalized review',
-        'Tuition fee scholarship acquisition tactics',
-        'D-Visa & Residence Permit documentation prep',
-      ],
-    },
-    contact: {
-      whatsapp: '+358409369708',
-      email: 'finbanglavoice@gmail.com',
-    },
-    enrollment: {
-      button_text: 'Enroll on WhatsApp',
-      url: '',
+      button_text: 'Enroll via Google Form',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScngT1MTcKR8B5106ZJ6a4Fe_D7XuGMfbWOHJPD2-K--MsaQg/viewform?usp=header',
     },
   },
 ];
+
 
 const getShortText = (text, limit = 160) => {
   if (!text) return 'Course overview and syllabus will be updated soon.';
@@ -285,14 +286,14 @@ const FeaturedCourses = () => {
                       rel="noopener noreferrer"
                       className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-all shadow-md flex items-center justify-center gap-1.5"
                     >
-                      {beginner ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
-                      <span>{beginner ? 'Enroll via Google Form' : enrollment.button_text || 'Enroll Now'}</span>
+                      {enrollUrl && enrollUrl.includes('docs.google.com/forms') ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
+                      <span>{enrollUrl && enrollUrl.includes('docs.google.com/forms') ? 'Enroll via Form' : enrollment.button_text || 'Enroll on WhatsApp'}</span>
                     </a>
                     <Link
-                      to="/courses"
+                      to={`/course/${course.id || course.course_id || 'course-finnish-a1'}`}
                       className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs text-center transition-all border border-slate-700 flex items-center justify-center gap-1"
                     >
-                      <span>Learn More</span>
+                      <span>Syllabus</span>
                       <FaArrowRight className="text-[10px]" />
                     </Link>
                   </div>

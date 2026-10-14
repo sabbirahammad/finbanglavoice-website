@@ -21,222 +21,49 @@ import {
 import Footer from '../Home/Footer';
 import { API_BASE_URL } from '../../config/api';
 import fallbackImage from '../../assets/t.webp';
-
-const defaultCoursesData = {
-  'course-finnish-a1': {
-    id: 'course-finnish-a1',
-    title: 'Practical Finnish Language Course in Bangla (Level 0 – A1)',
-    level: 'Beginner (Level 0 – A1)',
-    tagline: 'Master fundamental Finnish pronunciation, daily conversation, and grammar with clear Bengali explanations.',
-    duration: '3 Months (24 Live Zoom Classes)',
-    schedule: 'Friday & Saturday • 08:00 PM (Helsinki Time)',
-    fee: COURSE_PRICE.display,
-    instructor: {
-      name: 'Dr. SM Shafiqul Alam',
-      title: 'Professor, Senior Researcher & Finnish Education Ambassador',
-      bio: 'Over 7 years of Finnish language teaching experience and 20+ years of academic research and policy advisory. Official ambassador representing Finnish education agencies.',
-      image: fallbackImage,
-    },
-    modules: [
-      {
-        title: 'Module 1: Alphabets, Phonetics & Vowel Harmony (বর্ণমালা ও উচ্চারণ বিধি)',
-        topics: [
-          'The Finnish alphabet and special vowels (ä, ö, y)',
-          'Vowel harmony (Vokaalisointu) principles in Bangla',
-          'Double vowels & double consonants (Pitkät vokaalit ja konsonantit)',
-          'Basic greetings & everyday courtesy phrases (Hei, Tervetuloa, Kiitos)',
-        ],
-      },
-      {
-        title: 'Module 2: Daily Life Vocabulary & Numbers (দৈনন্দিন শব্দভাণ্ডার ও সংখ্যা)',
-        topics: [
-          'Cardinal and ordinal numbers, counting, and telling time',
-          'Days of the week, months, seasons, and Finnish weather terms',
-          'Shopping at markets, grocery stores, and asking for prices (Paljonko maksaa?)',
-          'Food, dining, and restaurant ordering expressions',
-        ],
-      },
-      {
-        title: 'Module 3: Core Grammar & Verb Conjugation (ব্যাকরণ ও ক্রিয়াপদ)',
-        topics: [
-          'The 6 Finnish verb types (Verbityypit) with clear Bangla breakdown',
-          'Consonant gradation (K-P-T vaihtelu) simplified rules',
-          'Personal pronouns and present tense sentence construction (Minä puhun...)',
-          'Forming positive and negative sentences in daily speech',
-        ],
-      },
-      {
-        title: 'Module 4: Essential Everyday Dialogues (বাস্তব জীবনের কথোপকথন)',
-        topics: [
-          'Introducing yourself, family, profession, and hometown',
-          'Public transport, asking for directions, and finding locations in Finnish cities',
-          'Doctor visits, pharmacy conversations, and health terms',
-          'Basic administrative communication (Posti, Kela, City services)',
-        ],
-      },
-    ],
-    features: [
-      '24 Interactive live Zoom sessions with real-time Q&A',
-      'Class video recordings accessible 24/7 for self-paced revision',
-      'Comprehensive PDF lecture notes, exercise sheets & vocabulary packs',
-      'Weekly homework assignments with personalized teacher feedback',
-      'Dedicated WhatsApp community study group for daily practice',
-      'Certificate of Completion from FinBangla Voice',
-    ],
-  },
-  'course-finnish-a2': {
-    id: 'course-finnish-a2',
-    title: 'Intermediate Finnish & Workplace Spoken (Level A1 – A2)',
-    level: 'Intermediate (Level A1 – A2)',
-    tagline: 'Elevate your Finnish for employment interviews, public authority interactions, and YKI test foundation.',
-    duration: '3 Months (24 Live Zoom Classes)',
-    schedule: 'Monday & Wednesday • 08:30 PM (Helsinki Time)',
-    fee: COURSE_PRICE.display,
-    instructor: {
-      name: 'Dr. SM Shafiqul Alam',
-      title: 'Professor, Senior Researcher & Finnish Education Ambassador',
-      bio: 'Specialist in immigrant linguistic integration and career settlement in Finland.',
-      image: fallbackImage,
-    },
-    modules: [
-      {
-        title: 'Module 1: Workplace & Professional Communication (কর্মক্ষেত্রের ভাষা)',
-        topics: [
-          'CV writing and job interview preparation in Finnish',
-          'Workplace instructions, colleague conversations, and email etiquette',
-          'Industry-specific vocabulary (Services, Tech, Healthcare, Logistics)',
-        ],
-      },
-      {
-        title: 'Module 2: Interacting with Official Authorities (সরকারি অফিসের যোগাযোগ)',
-        topics: [
-          'Navigating TE-palvelut employment plans and Kela benefit forms',
-          'Police (Poliisi) and Migri residence permit inquiries',
-          'Apartment rental contracts, housing company (Isännöitsijä) communication',
-        ],
-      },
-      {
-        title: 'Module 3: Advanced Grammar & Complex Cases (উন্নত ব্যাকরণ)',
-        topics: [
-          'Locative cases (Missä, Mistä, Mihin - Sisa- ja Ulkopaikallissijat)',
-          'Partitive case (Partitiivi) usage in objects and quantities',
-          'Past tense (Imperfekti) and perfect tense storytelling',
-        ],
-      },
-      {
-        title: 'Module 4: Foundation for National YKI Language Exam (YKI পরীক্ষার প্রস্তুতি)',
-        topics: [
-          'Reading comprehension and fast skimming strategies',
-          'Writing formal letters, complaints, and opinion paragraphs',
-          'Listening drills with diverse Finnish regional accents (Puhekieli)',
-        ],
-      },
-    ],
-    features: [
-      '24 In-depth Zoom sessions focused on active speaking',
-      'Workplace dialogue role-plays & realistic simulations',
-      'Advanced grammar PDF drills & audio exercise collections',
-      'Mock YKI test practice modules and assessment',
-      '1-on-1 feedback on Finnish job applications',
-    ],
-  },
-  'course-study-finland': {
-    id: 'course-study-finland',
-    title: 'Higher Education in Finland: University & AMK Admission Masterclass',
-    level: 'All Educational Levels',
-    tagline: 'Your complete roadmap to studying in Finland with scholarship acquisition and residence permit guidance.',
-    duration: '4 Weeks (8 Comprehensive Masterclasses + 1-on-1 Consultation)',
-    schedule: 'Sunday Masterclasses • 07:30 PM (Helsinki Time)',
-    fee: COURSE_PRICE.display,
-    instructor: {
-      name: 'Dr. SM Shafiqul Alam',
-      title: 'Professor, Senior Researcher & Finnish Education Ambassador',
-      bio: 'Official ambassador of Finnish education agencies. Has guided hundreds of students to Finnish university admissions.',
-      image: fallbackImage,
-    },
-    modules: [
-      {
-        title: 'Module 1: Finnish Higher Education Ecosystem Overview',
-        topics: [
-          'Academic Universities vs Applied Sciences (AMK) vs Vocational (Ammattiopisto)',
-          'Degree programs taught in English: Bachelors & Masters',
-          'Eligibility requirements, grade conversions, and language waivers',
-        ],
-      },
-      {
-        title: 'Module 2: Studyinfo.fi Joint Application Masterclass',
-        topics: [
-          'Navigating Opintopolku / Studyinfo.fi step-by-step',
-          'Understanding Entrance Examinations (International UAS Exam)',
-          'Crafting high-impact Statement of Purpose (SOP) & Motivation Letters',
-        ],
-      },
-      {
-        title: 'Module 3: Tuition Fee Scholarships & Financial Planning',
-        topics: [
-          'Securing 50% - 100% tuition waivers and Finland Scholarships',
-          'Proof of funds calculation and bank documentation rules',
-          'Part-time work opportunities, student housing (HOAS/TOAS), and living costs',
-        ],
-      },
-      {
-        title: 'Module 4: Student Residence Permit (D-Visa) & Settlement',
-        topics: [
-          'EnterFinland online application guide & VFS Global appointment prep',
-          'Health insurance requirements and biometric submission',
-          'Family reunification visas for spouse and children',
-          'Post-study 2-year job search visa & PR path',
-        ],
-      },
-    ],
-    features: [
-      '8 Comprehensive live masterclasses with slide decks',
-      'Personal 1-on-1 SOP & CV review session with Dr. SM Shafiqul Alam',
-      'Complete checklist for university application & visa paperwork',
-      'Direct connection with current Bangladeshi students in Finnish universities',
-    ],
-  },
-};
+import { getCourseSyllabus, ALL_SYLLABUSES } from '../../config/courseSyllabus';
 
 const CourseDetailsPage = () => {
   const { id } = useParams();
-  const [course, setCourse] = useState(defaultCoursesData[id] || defaultCoursesData['course-finnish-a1']);
+  const [course, setCourse] = useState(() => getCourseSyllabus(id));
   const [openModuleIndex, setOpenModuleIndex] = useState(0);
 
   useEffect(() => {
-    // If ID exists in default courses, use it
-    if (defaultCoursesData[id]) {
-      setCourse(defaultCoursesData[id]);
-      return;
-    }
+    const syllabus = getCourseSyllabus(id);
+    setCourse(syllabus);
+    setOpenModuleIndex(0);
 
-    // Try fetching from backend if it is a dynamic course
+    // Fetch latest details from backend if dynamic course
     const fetchDynamic = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/api/courses/${id}`);
         const data = await res.json();
         if (res.ok && data) {
           const c = data.course || data;
+          const matchedSyllabus = getCourseSyllabus(c.id ? c : id);
           setCourse({
             id: c.id || id,
-            title: c.course_name || 'Finnish Language Program',
-            level: c.course_details?.level || 'Beginner',
-            tagline: c.course_details?.session_overview || 'Comprehensive course designed for Bangladeshi learners.',
-            duration: c.course_details?.duration || '3 Months',
-            schedule: c.course_details?.schedule || 'Live Weekend Zoom',
-            fee: COURSE_PRICE.display,
+            title: c.course_name || matchedSyllabus.title,
+            level: c.course_details?.level || matchedSyllabus.level,
+            tagline: c.course_details?.session_overview || matchedSyllabus.tagline,
+            duration: c.course_details?.duration || matchedSyllabus.duration,
+            schedule: c.course_details?.schedule || matchedSyllabus.schedule,
+            fee: c.course_details?.total_fee || matchedSyllabus.fee || COURSE_PRICE.display,
+            enrollUrl: c.enrollment?.url || matchedSyllabus.enrollUrl,
             instructor: {
-              name: c.instructor?.name || 'Dr. SM Shafiqul Alam',
-              title: c.instructor?.bio || 'Professor, Senior Researcher & Finnish Education Ambassador',
-              bio: 'Leading educator and researcher bridging Bangladesh and Finland.',
-              image: c.instructor?.photo_url || fallbackImage,
+              name: c.instructor?.name || matchedSyllabus.instructor?.name || 'Dr. SM Shafiqul Alam',
+              title: c.instructor?.bio || matchedSyllabus.instructor?.title || 'Professor, Senior Researcher & Finnish Education Ambassador',
+              bio: c.instructor?.bio || matchedSyllabus.instructor?.bio || 'Leading educator and researcher bridging Bangladesh and Finland.',
+              image: c.instructor?.photo_url || matchedSyllabus.instructor?.image || fallbackImage,
             },
-            modules: defaultCoursesData['course-finnish-a1'].modules,
-            features: defaultCoursesData['course-finnish-a1'].features,
+            modules: matchedSyllabus.modules,
+            features: matchedSyllabus.features,
+            practiceDetails: matchedSyllabus.practiceDetails,
+            summaryInfo: matchedSyllabus.summaryInfo,
           });
         }
       } catch (err) {
-        console.error('Failed to load course details from API, using default:', err);
+        console.error('Failed to load course details from API, using default syllabus:', err);
       }
     };
 
@@ -248,9 +75,15 @@ const CourseDetailsPage = () => {
   };
 
   const beginner = isBeginnerCourse(course);
-  const enrollUrl = beginner ? BEGINNER_ENROLLMENT_URL : `https://wa.me/358409369708?text=${encodeURIComponent(
-    `Hello Dr. SM Shafiqul Alam, I would like to enroll in "${course.title}". Please send me batch details and enrollment steps.`
-  )}`;
+  const enrollUrl =
+    course.enrollUrl ||
+    (beginner
+      ? BEGINNER_ENROLLMENT_URL
+      : `https://wa.me/358409369708?text=${encodeURIComponent(
+          `Hello Dr. SM Shafiqul Alam, I would like to enroll in "${course.title}". Please send me batch details and enrollment steps.`
+        )}`);
+  const isGoogleForm = Boolean(enrollUrl && enrollUrl.includes('docs.google.com/forms'));
+
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col pt-20">
@@ -279,6 +112,17 @@ const CourseDetailsPage = () => {
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
               {course.tagline}
             </p>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-slate-300">
+                <FaClock className="text-cyan-400" />
+                <span>{course.duration}</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-slate-300">
+                <FaCalendarAlt className="text-blue-400" />
+                <span>{course.schedule}</span>
+              </span>
+            </div>
           </div>
 
         </div>
@@ -317,7 +161,7 @@ const CourseDetailsPage = () => {
                     <span>Curriculum & Syllabus Modules</span>
                   </h2>
                   <span className="text-xs text-slate-400 font-medium">
-                    {course.modules.length} Modules
+                    {course.modules.length} Modules / Classes
                   </span>
                 </div>
 
@@ -358,6 +202,62 @@ const CourseDetailsPage = () => {
                   })}
                 </div>
               </div>
+
+              {/* Additional Practice Guidelines & Objectives (if available) */}
+              {course.practiceDetails && (
+                <div className="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 space-y-6 shadow-xl">
+                  <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                    <FaClipboardList className="text-emerald-400 text-lg" />
+                    <span>অনুশীলন ও কোর্সের লক্ষ্য (Practice & Objectives)</span>
+                  </h2>
+
+                  <div className="space-y-5">
+                    {course.practiceDetails.inClass && (
+                      <div className="space-y-3 p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50">
+                        <h3 className="text-sm font-bold text-cyan-300">
+                          প্রতিটি ক্লাসের অনুশীলন
+                        </h3>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-slate-300">
+                          {course.practiceDetails.inClass.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <FaCheckCircle className="text-emerald-400 text-xs shrink-0 mt-1" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {course.practiceDetails.outsideClass && (
+                      <div className="space-y-2 p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50">
+                        <h3 className="text-sm font-bold text-blue-300">
+                          ক্লাসের বাইরের অনুশীলন
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                          {course.practiceDetails.outsideClass}
+                        </p>
+                      </div>
+                    )}
+
+                    {course.practiceDetails.objective && (
+                      <div className="space-y-2 p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50">
+                        <h3 className="text-sm font-bold text-amber-300">
+                          কোর্সের লক্ষ্য
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                          {course.practiceDetails.objective}
+                        </p>
+                      </div>
+                    )}
+
+                    {course.practiceDetails.note && (
+                      <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300">
+                        ℹ️ {course.practiceDetails.note}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Instructor Bio Box */}
               <div className="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 space-y-6 shadow-xl">
@@ -435,8 +335,8 @@ const CourseDetailsPage = () => {
                     rel="noopener noreferrer"
                     className="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm text-center transition-all shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                   >
-                    {beginner ? <FaClipboardList className="text-lg" /> : <FaWhatsapp className="text-lg" />}
-                    <span>{beginner ? 'Enroll via Google Form' : 'Enroll on WhatsApp'}</span>
+                    {isGoogleForm ? <FaClipboardList className="text-lg" /> : <FaWhatsapp className="text-lg" />}
+                    <span>{isGoogleForm ? 'Enroll via Google Form' : 'Enroll on WhatsApp'}</span>
                   </a>
 
                   <Link

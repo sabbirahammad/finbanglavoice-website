@@ -39,9 +39,16 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
   };
 
   const beginner = isBeginnerCourse(course);
-  const enrollUrl = beginner ? BEGINNER_ENROLLMENT_URL : `https://wa.me/358409369708?text=${encodeURIComponent(
-    `Hi Dr. SM Shafiqul Alam, I would like to enroll in the course: "${course.title || course.course_name}".`
-  )}`;
+  const enrollUrl =
+    course.enrollUrl ||
+    course.enrollment?.url ||
+    (beginner
+      ? BEGINNER_ENROLLMENT_URL
+      : `https://wa.me/358409369708?text=${encodeURIComponent(
+          `Hi Dr. SM Shafiqul Alam, I would like to enroll in the course: "${course.title || course.course_name}".`
+        )}`);
+  const isGoogleForm = Boolean(enrollUrl && enrollUrl.includes('docs.google.com/forms'));
+
 
   return (
     <motion.article
@@ -137,7 +144,7 @@ const CourseCard = ({ course, onRemoveFromWishlist }) => {
             rel="noopener noreferrer"
             className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-95"
           >
-            {beginner ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
+            {isGoogleForm ? <FaClipboardList className="text-sm" /> : <FaWhatsapp className="text-sm" />}
             <span>Enroll</span>
           </a>
 
